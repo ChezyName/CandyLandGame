@@ -3,6 +3,8 @@
 #include <iostream>
 #include <thread>
 
+#include "game.h"
+
 using namespace sf;
 
 Font font;
@@ -46,7 +48,7 @@ public:
             }
             else{
                 if(unicode == 8){
-                    UsernameText.erase(UsernameText.getSize() - 1, 1);
+                    if(UsernameText.getSize() > 0) UsernameText.erase(UsernameText.getSize() - 1, 1);
                 }
                 else{
                     UsernameText += unicode;
@@ -60,6 +62,8 @@ public:
                     //Load up game
                     printf("Ip & Username, PERFECT!\n");
                     printf("Loading Up Game...");
+                    Username.setString("Username: " + UsernameText + " - Connecting To Server...");
+                    ConnectToServer(IpText,UsernameText);
                 }
                 else{
                     printf("Text not good, retry");
@@ -68,7 +72,7 @@ public:
             }
             else{
                 if(unicode == 8){
-                    IpText.erase(IpText.getSize() - 1, 1);
+                    if(IpText.getSize() > 0) IpText.erase(IpText.getSize() - 1, 1);
                 }
                 else{
                     IpText += unicode;

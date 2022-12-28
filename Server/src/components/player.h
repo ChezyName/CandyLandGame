@@ -1,10 +1,15 @@
 #include <SFML/Network.hpp>
 
+using namespace sf;
+
 class Player {
     private:
-        sf::TcpSocket* Client;
+        TcpSocket* Client;
+        std::string Username;
+
     public:
-        Player(sf::TcpSocket* Socket){
+        Player(TcpSocket* Socket,std::string Name){
             Client = Socket;
+            Username = Name;
         }
 };

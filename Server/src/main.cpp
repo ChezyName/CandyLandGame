@@ -37,10 +37,9 @@ int main()
             Username.clear();
         }
 
-        cout << UsernamePacket << " joined from " + socket->getRemoteAddress().toString() << endl;
+        cout << UsernamePacket + " joined from " + socket->getRemoteAddress().toString() << endl;
 
-        Player* newClient = new Player(socket);
-
+        Player* newClient = new Player(socket,UsernamePacket);
         Clients.push_back(newClient);
     }
 }
