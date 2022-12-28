@@ -1,3 +1,5 @@
 # Executables
 *.exe
 *.o
+
+/Server/node_modules/*
