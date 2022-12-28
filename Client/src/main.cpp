@@ -3,17 +3,22 @@
 #include <iostream>
 
 using namespace std;
+using namespace sf;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1280, 720), "Candyland");
+    RenderWindow window(sf::VideoMode(1280, 720), "Candyland");
 
-    sf::TcpSocket socket;
-    sf::Socket::Status status = socket.connect("localhost", 7777);
+    TcpSocket socket;
+    Socket::Status status = socket.connect("localhost", 7777);
+
+    Packet Username;
+    Username << "ChezyName";
+    socket.send(Username);
 
     while (window.isOpen())
     {
-        sf::Event event;
+        Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)

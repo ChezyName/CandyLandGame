@@ -1,33 +1,46 @@
 #include <SFML/Network.hpp>
 #include <iostream>
+#include "components/player.h"
 
 using namespace std;
-
+using namespace sf;
 
 int main()
 {
-    std::vector<sf::TcpSocket*> clients;
+    std::vector<Player*> Clients;
 
-    sf::TcpListener listener;
+    TcpListener listener;
 
-    if (listener.listen(7777) != sf::Socket::Done)
+    if (listener.listen(7777) != Socket::Done)
     {
         printf("Error\n");
     }
 
-    printf("Waiting for first connection...\n");
+    cout << "Server started on port 7777\n" << endl;
 
-    while (clients.size() < 2)
+    while (true)
     {
-        sf::TcpSocket *socket = new sf::TcpSocket;
-        if (listener.accept(*socket) != sf::Socket::Done)
+        //Gameplay Loop
+        TcpSocket *socket = new TcpSocket;
+        if (listener.accept(*socket) != Socket::Done)
         {
             printf("Error\n");
         }
 
-        clients.push_back(socket);
+        Packet Username;
+        socket->receive(Username);
+        std::string UsernamePacket;
 
-        // OK, that one would be printed twice!!!
-        printf("Waiting for second connection...\n");
+        if (Username.getDataSize() > 0)
+        {
+            Username >> UsernamePacket;
+            Username.clear()
+        }
+
+        cout << UsernamePacket << " joined from " + socket->getRemoteAddress().toString() << endl;
+
+        Player* newClient = new Player(socket);
+
+        Clients.push_back(newClient);
     }
 }
