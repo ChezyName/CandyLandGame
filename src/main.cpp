@@ -1,10 +1,16 @@
 #include <SFML/Graphics.hpp>
+#define _WIN32_WINNT 0x0500
+#include <windows.h>
+#include <iostream>
+
+using namespace std;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML works!");
+
+    HWND hWnd = GetConsoleWindow();
+    ShowWindow( hWnd, SW_HIDE );
 
     while (window.isOpen())
     {
@@ -16,7 +22,6 @@ int main()
         }
 
         window.clear();
-        window.draw(shape);
         window.display();
     }
 
