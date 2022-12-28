@@ -34,7 +34,7 @@ int main()
         if (Username.getDataSize() > 0)
         {
             Username >> UsernamePacket;
-            Username.clear()
+            Username.clear();
         }
 
         cout << UsernamePacket << " joined from " + socket->getRemoteAddress().toString() << endl;
