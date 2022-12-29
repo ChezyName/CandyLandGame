@@ -12,4 +12,6 @@ class Player {
             Client = Socket;
             Username = Name;
         }
+
+        std::string getUsername() { return Username; }
 };

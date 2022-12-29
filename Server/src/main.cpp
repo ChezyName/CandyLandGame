@@ -1,13 +1,11 @@
-#include <SFML/Network.hpp>
-#include <iostream>
-#include "components/player.h"
+#include "main.h"
 
 using namespace std;
 using namespace sf;
 
 int main()
 {
-    std::vector<Player*> Clients;
+    std::thread commandThread(runCommands);
 
     TcpListener listener;
 
@@ -42,4 +40,28 @@ int main()
         Player* newClient = new Player(socket,UsernamePacket);
         Clients.push_back(newClient);
     }
+}
+
+void runCommands(){
+    while (true)
+    {
+        string input;
+        cin >> input;
+
+        if(input == "getplayers" || input == "players"){
+            //get players command
+            printf("Current Players In Server:\n");
+            for(auto i : Clients){
+                cout << i->getUsername() << endl;
+            }
+            printf("===========================\n");
+        }
+        else if(input == "clear"){
+            system("cls");
+        }
+        else {
+            printf("Command Not Found.\n");
+        }
+    }
+    
 }
