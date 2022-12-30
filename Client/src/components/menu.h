@@ -12,6 +12,7 @@ Text Username;
 Text Ip;
 
 bool isUsername = true;
+bool isFinished = false;
 
 String UsernameText;
 String IpText;
@@ -41,7 +42,11 @@ public:
         window.draw(Ip);
     }
 
-    void addText(Uint32 unicode){
+    bool isDone() {
+        return isFinished;
+    }
+
+    void addText(Uint32 unicode,RenderWindow* w){
         if(isUsername){
             if(unicode == 13){
                 isUsername = false;
@@ -63,7 +68,8 @@ public:
                     printf("Ip & Username, PERFECT!\n");
                     printf("Loading Up Game...");
                     Username.setString("Username: " + UsernameText + " - Connecting To Server...");
-                    ConnectToServer(IpText,UsernameText);
+                    ConnectToServer(IpText,UsernameText,w);
+                    isFinished = true;
                 }
                 else{
                     printf("Text not good, retry");

@@ -2,8 +2,13 @@
 #include <iostream>
 #include <thread>
 
-#include "components/player.h"
+#include "components/players.h"
 
-std::vector<Player*> Clients;
+Players players;
+int playerCount = 0;
+
+TcpListener listener;
+bool gameStarted = false;
 
 void runCommands();
+void letJoin();

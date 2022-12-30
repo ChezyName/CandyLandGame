@@ -7,8 +7,9 @@
 using namespace std;
 using namespace sf;
 
-enum GameState {Menu,Playing};
+enum GameState {Menu,WaitingForPlayers};
 GameState GS = Menu;
+bool frameOnLoading = true;
 
 int main()
 {
@@ -17,6 +18,8 @@ int main()
 
     while (window.isOpen())
     {
+        window.clear();
+
         Event event;
         while (window.pollEvent(event))
         {
@@ -24,17 +27,19 @@ int main()
                 window.close();
             if(event.type == Event::TextEntered && GS == Menu){
                 cout << "KeyCode: " << (event.text.unicode) << endl;
-                MainMenu->addText(event.text.unicode);
+                MainMenu->addText(event.text.unicode,&window);
             }
         }
 
-        window.clear();
         switch (GS)
         {
             case Menu:
                 MainMenu->UpdateComponent(window);
+                if(MainMenu->isDone()) GS = WaitingForPlayers;
                 break;
-            
+            case WaitingForPlayers:
+                waitForConnections();
+                break;
             default:
                 break;
         }

@@ -2,6 +2,8 @@
 #include <SFML/Network.hpp>
 #include <iostream>
 
+#include "players.h"
+
 using namespace std;
 using namespace sf;
 
@@ -18,10 +20,30 @@ class GSocket {
                 Username << username.toAnsiString().c_str();
                 socket.send(Username);
         }
+
+        TcpSocket* getSocket() { return &socket; }
 };
 
 
 GSocket* playerSocket;
-void ConnectToServer(String IP,String Name){
+Players allOtherPlayers;
+
+void ConnectToServer(String IP,String Name,RenderWindow* Window){
     playerSocket = new GSocket(IP,Name);
+}
+
+void waitForConnections(){
+    Packet data;
+    playerSocket->getSocket()->setBlocking(false);
+    playerSocket->getSocket()->receive(data);
+
+    if(data.getDataSize() > 0){
+        string dataName;
+        data >> dataName;
+
+        if(dataName == "Players"){
+            //Load Up Players
+            data >> dataName >> allOtherPlayers;
+        }
+    }
 }
