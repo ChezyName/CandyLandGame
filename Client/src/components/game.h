@@ -27,12 +27,16 @@ class GSocket {
 
 GSocket* playerSocket;
 Players allOtherPlayers;
+Font currentFont;
+string myName;
 
-void ConnectToServer(String IP,String Name,RenderWindow* Window){
+void ConnectToServer(String IP,String Name,RenderWindow* Window,Font F){
     playerSocket = new GSocket(IP,Name);
+    myName = Name;
+    currentFont = F;
 }
 
-void waitForConnections(){
+void waitForConnections(RenderWindow* win){
     Packet data;
     playerSocket->getSocket()->setBlocking(false);
     playerSocket->getSocket()->receive(data);
@@ -47,4 +51,7 @@ void waitForConnections(){
             getUsernamesForConsole(allOtherPlayers);
         }
     }
+
+    //Display All Player Names
+    ShowPlayerNames(allOtherPlayers,win,currentFont,myName);
 }

@@ -68,7 +68,7 @@ public:
                     printf("Ip & Username, PERFECT!\n");
                     printf("Loading Up Game...");
                     Username.setString("Username: " + UsernameText + " - Connecting To Server...");
-                    ConnectToServer(IpText,UsernameText,w);
+                    ConnectToServer(IpText,UsernameText,w,font);
                     isFinished = true;
                 }
                 else{

@@ -38,11 +38,12 @@ int main()
                 if(MainMenu->isDone()) GS = WaitingForPlayers;
                 break;
             case WaitingForPlayers:
-                waitForConnections();
+                waitForConnections(&window);
                 break;
             default:
                 break;
         }
+        
         window.display();
     }
 
