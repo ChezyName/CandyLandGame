@@ -26,7 +26,7 @@ class GSocket {
 
 
 GSocket* playerSocket;
-Players allOtherPlayers;
+Players allPlayers;
 Font currentFont;
 string myName;
 bool startGame = false;
@@ -41,6 +41,47 @@ bool hasGameStarted(){
     return startGame;
 }
 
+void CreatePlayerSprites(){
+    int x = 1280/2;
+    int y = 720/2;
+
+    if(allPlayers.player1t.loadFromFile("Assets/Players/P1.png")){
+        cout << "Loading Sprite For " << allPlayers.player1 << endl;
+        allPlayers.player1s.setTexture(allPlayers.player1t);
+        allPlayers.player1s.setPosition(x,y);
+    }
+
+    if(allPlayers.player2t.loadFromFile("Assets/Players/P1.png")){
+        cout << "Loading Sprite For " << allPlayers.player2 << endl;
+        allPlayers.player2s.setTexture(allPlayers.player1t);
+        allPlayers.player2s.setPosition(x,y);
+    }
+
+    if(allPlayers.player3t.loadFromFile("Assets/Players/P1.png")){
+        cout << "Loading Sprite For " << allPlayers.player2 << endl;
+        allPlayers.player3s.setTexture(allPlayers.player3t);
+        allPlayers.player3s.setPosition(x,y);
+    }
+
+    if(allPlayers.player4t.loadFromFile("Assets/Players/P1.png")){
+        cout << "Loading Sprite For " << allPlayers.player3 << endl;
+        allPlayers.player4s.setTexture(allPlayers.player4t);
+        allPlayers.player4s.setPosition(x,y);
+    }
+
+    if(allPlayers.player5t.loadFromFile("Assets/Players/P1.png")){
+        cout << "Loading Sprite For " << allPlayers.player4 << endl;
+        allPlayers.player5s.setTexture(allPlayers.player5t);
+        allPlayers.player5s.setPosition(x,y);
+    }
+
+    if(allPlayers.player6t.loadFromFile("Assets/Players/P1.png")){
+        cout << "Loading Sprite For " << allPlayers.player5 << endl;
+        allPlayers.player6s.setTexture(allPlayers.player6t);
+        allPlayers.player6s.setPosition(x,y);
+    }
+}
+
 void waitForConnections(RenderWindow* win){
     Packet data;
     playerSocket->getSocket()->setBlocking(false);
@@ -52,18 +93,19 @@ void waitForConnections(RenderWindow* win){
 
         if(dataName == "Players"){
             //Load Up Players
-            data >> allOtherPlayers;
-            //getUsernamesForConsole(allOtherPlayers);
+            data >> allPlayers;
+            //getUsernamesForConsole(allPlayers);
         }
         else if(dataName == "Start"){
             startGame = true;
+            CreatePlayerSprites();
         }
     }
 
     //Display All Player Names
-    ShowPlayerNames(allOtherPlayers,win,currentFont,myName);
+    ShowPlayerNames(allPlayers,win,currentFont,myName);
 }
 
 void GameUpdateFrame(RenderWindow* window){
-    
+    window->draw(allPlayers.player1s);
 }

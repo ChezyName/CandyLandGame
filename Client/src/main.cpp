@@ -59,6 +59,8 @@ int main()
                 waitForConnections(&window);
                 if(hasGameStarted()) GS = Gameplay;
                 break;
+            case Gameplay:
+                GameUpdateFrame(&window);
             default:
                 break;
         }

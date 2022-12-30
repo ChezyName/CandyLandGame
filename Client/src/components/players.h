@@ -1,4 +1,5 @@
 #include <SFML/Network.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 
 using namespace std;
@@ -7,11 +8,28 @@ using namespace sf;
 struct Players
 {
     string player1;
+    Texture player1t;
+    Sprite player1s;
+
     string player2;
+    Texture player2t;
+    Sprite player2s;
+
     string player3;
+    Texture player3t;
+    Sprite player3s;
+
     string player4;
+    Texture player4t;
+    Sprite player4s;
+
     string player5;
+    Texture player5t;
+    Sprite player5s;
+
     string player6;
+    Texture player6t;
+    Sprite player6s;
 };
 
 void getUsernamesForConsole(Players& p){
