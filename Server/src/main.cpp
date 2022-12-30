@@ -72,18 +72,14 @@ void letJoin(){
 
     playerCount++;
 
-    //send player count to all clients
-    int pSize;
-    string Name;
-
     Packet clientCount;
     string C = "Players";
     clientCount << C.c_str();
 
-    clientCount << players;
+    getUsernamesForPacket(players,clientCount);
     sendPacketToAll(players,clientCount);
 
-    if(playerCount >= 5) {
+    if(playerCount >= 6) {
         cout << "Game is ready to start, player count is 6...\nStarting game." << endl;
         gameStarted = true;
     }
