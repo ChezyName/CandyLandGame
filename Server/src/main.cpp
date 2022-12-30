@@ -85,6 +85,9 @@ void letJoin(){
     if(playerCount >= 6) {
         cout << "Game is ready to start, player count is 6...\nStarting game." << endl;
         gameStarted = true;
+        Packet p;
+        p << "Start";
+        sendPacketToAll(players,p);
     }
 }
 
@@ -99,6 +102,14 @@ void runCommands(){
             printf("\nCurrent Players In Server:\n");
             getUsernamesForConsole(players);
             printf("===========================\n");
+        }
+        else if(input == "start"){
+            if(players.player1 != nullptr && players.player2 != nullptr){
+                gameStarted = true;
+                Packet p;
+                p << "Start";
+                sendPacketToAll(players,p);
+            }
         }
         else if(input == "clear"){
             system("cls");

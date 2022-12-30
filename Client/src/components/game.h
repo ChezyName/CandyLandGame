@@ -29,11 +29,16 @@ GSocket* playerSocket;
 Players allOtherPlayers;
 Font currentFont;
 string myName;
+bool startGame = false;
 
 void ConnectToServer(String IP,String Name,RenderWindow* Window,Font F){
     playerSocket = new GSocket(IP,Name);
     myName = Name;
     currentFont = F;
+}
+
+bool hasGameStarted(){
+    return startGame;
 }
 
 void waitForConnections(RenderWindow* win){
@@ -48,10 +53,17 @@ void waitForConnections(RenderWindow* win){
         if(dataName == "Players"){
             //Load Up Players
             data >> allOtherPlayers;
-            getUsernamesForConsole(allOtherPlayers);
+            //getUsernamesForConsole(allOtherPlayers);
+        }
+        else if(dataName == "Start"){
+            startGame = true;
         }
     }
 
     //Display All Player Names
     ShowPlayerNames(allOtherPlayers,win,currentFont,myName);
+}
+
+void GameUpdateFrame(RenderWindow* window){
+    
 }
