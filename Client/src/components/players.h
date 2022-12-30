@@ -15,14 +15,19 @@ struct Players
 };
 
 void getUsernamesForConsole(Players& p){
-    printf("==============================");
+    printf("==============================\n");
     cout << p.player1 << endl;
     cout << p.player2 << endl;
     cout << p.player3 << endl;
     cout << p.player4 << endl;
     cout << p.player5 << endl;
     cout << p.player6 << endl;
-    printf("==============================");
+    printf("==============================\n");
+}
+
+void getUsernamesFromPacket(Players& p,Packet packet){
+    string packetName;
+    packet >> packetName >> p.player1 >> p.player2 >> p.player3 >> p.player4 >> p.player5 >> p.player6;
 }
 
 sf::Packet& operator <<(sf::Packet& packet, const Players& p)

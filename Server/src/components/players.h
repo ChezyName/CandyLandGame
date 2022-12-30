@@ -15,7 +15,7 @@ class Player {
             Username = Name;
         }
 
-        std::string getUsername() { return Username; }
+        const string& getUsername() { return Username; }
         
         void sendPacket(Packet p) {
             Client->send(p);
@@ -30,6 +30,14 @@ struct Players
     Player* player4 = nullptr;
     Player* player5 = nullptr;
     Player* player6 = nullptr;
+
+public:
+    string player1name;
+    string player2name;
+    string player3name;
+    string player4name;
+    string player5name;
+    string player6name;
 };
 
 void sendPacketToAll(Players& p,Packet packet){
@@ -61,5 +69,5 @@ void getUsernamesForConsole(Players& p){
 
 sf::Packet& operator <<(sf::Packet& packet, const Players& p)
 {
-    return packet << p.player1->getUsername() << p.player2->getUsername() << p.player3->getUsername() << p.player4->getUsername() << p.player5->getUsername() << p.player6->getUsername();
+    return packet << p.player1name << p.player2name << p.player3name << p.player4name << p.player5name << p.player6name;
 }

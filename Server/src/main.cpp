@@ -46,28 +46,30 @@ void letJoin(){
 
     Player* newClient = new Player(socket,UsernamePacket);
     
-    switch (playerCount)
-    {
-        case 0:
-            players.player1 = newClient;
-            break;
-        case 1:
-            players.player2 = newClient;
-            break;
-        case 2:
-            players.player3 = newClient;
-            break;
-        case 3:
-            players.player4 = newClient;
-            break;
-        case 4:
-            players.player5 = newClient;
-            break;
-        case 5:
-            players.player6 = newClient;
-            break;
-        default:
-            break;
+
+    if(playerCount == 0){
+        players.player1 = newClient;
+        players.player1name = UsernamePacket;
+    }
+    else if(playerCount == 1){
+        players.player2 = newClient;
+        players.player2name = UsernamePacket;
+    }
+    else if(playerCount == 2){
+        players.player3 = newClient;
+        players.player3name = UsernamePacket;
+    }
+    else if(playerCount == 3){
+        players.player4 = newClient;
+        players.player4name = UsernamePacket;
+    }
+    else if(playerCount == 4){
+        players.player5 = newClient;
+        players.player5name = UsernamePacket;
+    }
+    else if(playerCount == 5){
+        players.player6 = newClient;
+        players.player6name = UsernamePacket;
     }
 
     playerCount++;
@@ -76,7 +78,8 @@ void letJoin(){
     string C = "Players";
     clientCount << C.c_str();
 
-    getUsernamesForPacket(players,clientCount);
+    //getUsernamesForPacket(players,clientCount);
+    clientCount << players;
     sendPacketToAll(players,clientCount);
 
     if(playerCount >= 6) {
@@ -93,7 +96,7 @@ void runCommands(){
 
         if(input == "getplayers" || input == "players"){
             //get players command
-            printf("Current Players In Server:\n");
+            printf("\nCurrent Players In Server:\n");
             getUsernamesForConsole(players);
             printf("===========================\n");
         }

@@ -43,7 +43,8 @@ void waitForConnections(){
 
         if(dataName == "Players"){
             //Load Up Players
-            data >> dataName >> allOtherPlayers;
+            data >> allOtherPlayers;
+            getUsernamesForConsole(allOtherPlayers);
         }
     }
 }
