@@ -32,6 +32,9 @@ string myName;
 bool startGame = false;
 RectangleShape PlayerList(Vector2f(400,80*6));
 
+RectangleShape gameBG;
+Texture gameBGT;
+
 void ConnectToServer(String IP,String Name,RenderWindow* Window,Font F){
     playerSocket = new GSocket(IP,Name);
     myName = Name;
@@ -43,9 +46,9 @@ bool hasGameStarted(){
     return startGame;
 }
 
-void CreatePlayerSprites(){
-    int x = 1280/2;
-    int y = 720/2;
+void CreatePlayerSprites(RenderWindow* w){
+    int x = w->getSize().x/2;
+    int y = w->getSize().y/2;
 
     if(allPlayers.player1t.loadFromFile("Assets/Players/P1.png")){
         cout << "Loading Sprite For " << allPlayers.player1 << endl;
@@ -136,6 +139,11 @@ void CreatePlayerSprites(){
     allPlayers.player4text.setPosition(xs*2,ys*3.25);
     allPlayers.player5text.setPosition(xs*2,ys*4.25);
     allPlayers.player6text.setPosition(xs*2,ys*5.25);
+
+    //Change Background
+    gameBGT.loadFromFile("Assets/BG.png");
+    gameBG.setTexture(&gameBGT);
+    gameBG.setSize(Vector2f(x*2,y*2));
 }
 
 void waitForConnections(RenderWindow* win){
@@ -154,7 +162,7 @@ void waitForConnections(RenderWindow* win){
         }
         else if(dataName == "Start"){
             startGame = true;
-            CreatePlayerSprites();
+            CreatePlayerSprites(win);
         }
     }
 
@@ -163,6 +171,10 @@ void waitForConnections(RenderWindow* win){
 }
 
 void GameUpdateFrame(RenderWindow* window){
+    //BG
+    window->draw(gameBG);
+
+
     //UI
     window->draw(PlayerList);
     DisplayPlayerIcons(allPlayers,window);
