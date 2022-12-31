@@ -62,13 +62,16 @@ vector<BasicSpot*> createSpots(){
         int nextX = lastX + getRandomBool() ? -spaceBetweenX : spaceBetweenX;
         int nextY = lastY + getRandomBool() ? -spaceBetweenY : spaceBetweenY;
 
-        if(nextX < 32) nextX = lastX + spaceBetweenX;
+        if(nextX < 32) nextX = lastX + (rand() % spaceBetweenX);
         if(nextX > MaxPlacementX) keepPlacing = false;
-        if(nextY < 32) nextY = lastY + spaceBetweenY;
+        if(nextY < 32) nextY = lastY + (rand() % spaceBetweenY);
         if(nextY > MaxPlacementY) keepPlacing = false;
         
         EmptySpot* spot = new EmptySpot(nextX,nextY);
         Spots.push_back(spot);
+
+        lastX = nextX;
+        lastY = nextY;
     }
     return Spots;
 }
