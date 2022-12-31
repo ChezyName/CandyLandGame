@@ -5,38 +5,93 @@
 using namespace std;
 using namespace sf;
 
+Font cf;
+
 struct Players
 {
     string player1;
     Texture player1t;
     Sprite player1s;
     Sprite player1c;
+    Text player1text;
 
     string player2;
     Texture player2t;
     Sprite player2s;
     Sprite player2c;
+    Text player2text;
 
     string player3;
     Texture player3t;
     Sprite player3s;
     Sprite player3c;
+    Text player3text;
 
     string player4;
     Texture player4t;
     Sprite player4s;
     Sprite player4c;
+    Text player4text;
 
     string player5;
     Texture player5t;
     Sprite player5s;
     Sprite player5c;
+    Text player5text;
 
     string player6;
     Texture player6t;
     Sprite player6s;
     Sprite player6c;
+    Text player6text;
 };
+
+void createPlayerTextObjs(Players& p){
+    cf.loadFromFile("Arial.ttf");
+    
+    p.player1text.setFont(cf);
+    p.player1text.setCharacterSize(20);
+    p.player1text.setFillColor(Color::White);
+    p.player1text.setStyle(Text::Bold);
+    p.player1text.setOrigin(0, p.player1text.getLocalBounds().height/2);
+    p.player1text.setString(p.player1);
+
+
+    p.player2text.setFont(cf);
+    p.player2text.setCharacterSize(20);
+    p.player2text.setFillColor(Color::White);
+    p.player2text.setStyle(Text::Bold);
+    p.player2text.setOrigin(0, p.player2text.getLocalBounds().height/2);
+    p.player2text.setString(p.player2);
+
+    p.player3text.setFont(cf);
+    p.player3text.setCharacterSize(20);
+    p.player3text.setFillColor(Color::White);
+    p.player3text.setStyle(Text::Bold);
+    p.player3text.setOrigin(0, p.player3text.getLocalBounds().height/2);
+    p.player3text.setString(p.player3);
+
+    p.player4text.setFont(cf);
+    p.player4text.setCharacterSize(20);
+    p.player4text.setFillColor(Color::White);
+    p.player4text.setStyle(Text::Bold);
+    p.player4text.setOrigin(0, p.player4text.getLocalBounds().height/2);
+    p.player4text.setString(p.player4);
+
+    p.player5text.setFont(cf);
+    p.player5text.setCharacterSize(20);
+    p.player5text.setFillColor(Color::White);
+    p.player5text.setStyle(Text::Bold);
+    p.player5text.setOrigin(0, p.player5text.getLocalBounds().height/2);
+    p.player5text.setString(p.player5);
+
+    p.player6text.setFont(cf);
+    p.player6text.setCharacterSize(20);
+    p.player6text.setFillColor(Color::White);
+    p.player6text.setStyle(Text::Bold);
+    p.player6text.setOrigin(0, p.player6text.getLocalBounds().height/2);
+    p.player6text.setString(p.player6);
+}
 
 void getUsernamesForConsole(Players& p){
     printf("==============================\n");
@@ -56,6 +111,17 @@ void DisplayPlayerIcons(Players& p,RenderWindow* win){
     if(!p.player4.empty()) win->draw(p.player4c);
     if(!p.player5.empty()) win->draw(p.player5c);
     if(!p.player6.empty()) win->draw(p.player6c);
+}
+
+void DisplayPlayersText(Players& p,RenderWindow* win){
+    //cout << "Drawing Player Text @ " << p.player1text.getPosition().x << "," << p.player1text.getPosition().y << endl;
+
+    if(!p.player1.empty()) win->draw(p.player1text);
+    if(!p.player2.empty()) win->draw(p.player2text);
+    if(!p.player3.empty()) win->draw(p.player3text);
+    if(!p.player4.empty()) win->draw(p.player4text);
+    if(!p.player5.empty()) win->draw(p.player5text);
+    if(!p.player6.empty()) win->draw(p.player6text);
 }
 
 void DisplayPlayers(Players& p,RenderWindow* win){

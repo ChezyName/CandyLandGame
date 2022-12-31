@@ -120,12 +120,21 @@ void CreatePlayerSprites(){
 
     PlayerList.setSize(Vector2f(250,ys*GetPlayerCount(allPlayers)));
 
+    createPlayerTextObjs(allPlayers);
+
     allPlayers.player1c.setPosition(xs,ys*0.5);
     allPlayers.player2c.setPosition(xs,ys*1.5);
     allPlayers.player3c.setPosition(xs,ys*2.5);
     allPlayers.player4c.setPosition(xs,ys*3.5);
     allPlayers.player5c.setPosition(xs,ys*4.5);
     allPlayers.player6c.setPosition(xs,ys*5.5);
+
+    allPlayers.player1text.setPosition(xs*2,ys*0.5);
+    allPlayers.player2text.setPosition(xs*2,ys*1.5);
+    allPlayers.player3text.setPosition(xs*2,ys*2.5);
+    allPlayers.player4text.setPosition(xs*2,ys*3.5);
+    allPlayers.player5text.setPosition(xs*2,ys*4.5);
+    allPlayers.player6text.setPosition(xs*2,ys*5.5);
 }
 
 void waitForConnections(RenderWindow* win){
@@ -156,4 +165,5 @@ void GameUpdateFrame(RenderWindow* window){
     //UI
     window->draw(PlayerList);
     DisplayPlayerIcons(allPlayers,window);
+    DisplayPlayersText(allPlayers,window);
 }
