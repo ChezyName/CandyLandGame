@@ -10,26 +10,32 @@ struct Players
     string player1;
     Texture player1t;
     Sprite player1s;
+    Sprite player1c;
 
     string player2;
     Texture player2t;
     Sprite player2s;
+    Sprite player2c;
 
     string player3;
     Texture player3t;
     Sprite player3s;
+    Sprite player3c;
 
     string player4;
     Texture player4t;
     Sprite player4s;
+    Sprite player4c;
 
     string player5;
     Texture player5t;
     Sprite player5s;
+    Sprite player5c;
 
     string player6;
     Texture player6t;
     Sprite player6s;
+    Sprite player6c;
 };
 
 void getUsernamesForConsole(Players& p){
@@ -41,6 +47,34 @@ void getUsernamesForConsole(Players& p){
     cout << p.player5 << endl;
     cout << p.player6 << endl;
     printf("==============================\n");
+}
+
+void DisplayPlayerIcons(Players& p,RenderWindow* win){
+    if(!p.player1.empty()) win->draw(p.player1c);
+    if(!p.player2.empty()) win->draw(p.player2c);
+    if(!p.player3.empty()) win->draw(p.player3c);
+    if(!p.player4.empty()) win->draw(p.player4c);
+    if(!p.player5.empty()) win->draw(p.player5c);
+    if(!p.player6.empty()) win->draw(p.player6c);
+}
+
+void DisplayPlayers(Players& p,RenderWindow* win){
+    if(!p.player1.empty()) win->draw(p.player1s);
+    if(!p.player2.empty()) win->draw(p.player2s);
+    if(!p.player3.empty()) win->draw(p.player3s);
+    if(!p.player4.empty()) win->draw(p.player4s);
+    if(!p.player5.empty()) win->draw(p.player5s);
+    if(!p.player6.empty()) win->draw(p.player6s);
+}
+
+int GetPlayerCount(Players& p){
+    if(!p.player6.empty()) return 6;
+    if(!p.player5.empty()) return 5;
+    if(!p.player4.empty()) return 4;
+    if(!p.player3.empty()) return 3;
+    if(!p.player2.empty()) return 2;
+    if(!p.player1.empty()) return 1;
+    return 0;
 }
 
 void getUsernamesFromPacket(Players& p,Packet packet){
