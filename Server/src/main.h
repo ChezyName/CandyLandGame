@@ -2,6 +2,7 @@
 #include <iostream>
 #include <thread>
 
+#include "components/spots.h"
 #include "components/players.h"
 
 Players players;

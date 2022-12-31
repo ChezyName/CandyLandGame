@@ -25,6 +25,22 @@ int main()
     return 0;
 }
 
+void createSpotsForAll(){
+    cout << "Creating Map, Please Wait..." << endl;
+    vector<BasicSpot*> spots = createSpots();
+    Packet p;
+    p << "MAP";
+    p << spots.size();
+
+    for(BasicSpot* s : spots){
+        p << s;
+    }
+
+    cout << "Map was loaded on size " << spots.size() << endl;
+
+    sendPacketToAll(players,p);
+}
+
 void letJoin(){
     TcpSocket *socket = new TcpSocket;
     if (listener.accept(*socket) != Socket::Done)
@@ -88,6 +104,7 @@ void letJoin(){
         Packet p;
         p << "Start";
         sendPacketToAll(players,p);
+        createSpotsForAll();
     }
 }
 
@@ -109,6 +126,7 @@ void runCommands(){
                 Packet p;
                 p << "Start";
                 sendPacketToAll(players,p);
+                createSpotsForAll();
             }
         }
         else if(input == "clear"){

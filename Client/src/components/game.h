@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "players.h"
+#include "spot.h"
 
 using namespace std;
 using namespace sf;
@@ -179,4 +180,24 @@ void GameUpdateFrame(RenderWindow* window){
     window->draw(PlayerList);
     DisplayPlayerIcons(allPlayers,window);
     DisplayPlayersText(allPlayers,window);
+
+    //Get Socket Updates
+    Packet data;
+    playerSocket->getSocket()->receive(data);
+    string dataName;
+    if(data.getDataSize() > 0){
+        data >> dataName;
+        if(dataName == "MAP"){
+            //Load Up Map
+            int spotSize = -1;
+            data >> spotSize;
+            data >> spotSize;
+            cout << "Creating Map Of Size[v2]" << spotSize << endl;
+            for(int i = 0; i < spotSize; i++){
+                Spot newSpot;
+                data >> newSpot;
+                cout << "NAME:" << newSpot.name << newSpot.xPos << newSpot.yPos << endl;
+            }
+        }
+    }
 }
