@@ -30,7 +30,7 @@ Players allPlayers;
 Font currentFont;
 string myName;
 bool startGame = false;
-RectangleShape PlayerList(Vector2f(250,80*6));
+RectangleShape PlayerList(Vector2f(400,80*6));
 
 void ConnectToServer(String IP,String Name,RenderWindow* Window,Font F){
     playerSocket = new GSocket(IP,Name);
@@ -130,12 +130,12 @@ void CreatePlayerSprites(){
     allPlayers.player5c.setPosition(xs,ys*4.5);
     allPlayers.player6c.setPosition(xs,ys*5.5);
 
-    allPlayers.player1text.setPosition(xs*2,ys*0.5);
-    allPlayers.player2text.setPosition(xs*2,ys*1.5);
-    allPlayers.player3text.setPosition(xs*2,ys*2.5);
-    allPlayers.player4text.setPosition(xs*2,ys*3.5);
-    allPlayers.player5text.setPosition(xs*2,ys*4.5);
-    allPlayers.player6text.setPosition(xs*2,ys*5.5);
+    allPlayers.player1text.setPosition(xs*2,ys*0.25);
+    allPlayers.player2text.setPosition(xs*2,ys*1.25);
+    allPlayers.player3text.setPosition(xs*2,ys*2.25);
+    allPlayers.player4text.setPosition(xs*2,ys*3.25);
+    allPlayers.player5text.setPosition(xs*2,ys*4.25);
+    allPlayers.player6text.setPosition(xs*2,ys*5.25);
 }
 
 void waitForConnections(RenderWindow* win){
