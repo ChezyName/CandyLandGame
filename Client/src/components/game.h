@@ -35,6 +35,7 @@ RectangleShape PlayerList(Vector2f(250,80*6));
 void ConnectToServer(String IP,String Name,RenderWindow* Window,Font F){
     playerSocket = new GSocket(IP,Name);
     myName = Name;
+    allPlayers.ME = myName;
     currentFont = F;
 }
 

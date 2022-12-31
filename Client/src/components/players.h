@@ -9,6 +9,8 @@ Font cf;
 
 struct Players
 {
+    string ME;
+
     string player1;
     Texture player1t;
     Sprite player1s;
@@ -48,49 +50,45 @@ struct Players
 
 void createPlayerTextObjs(Players& p){
     cf.loadFromFile("Arial.ttf");
-    
+    int textSize = 28;
+    Color textColor = Color::White;
+
     p.player1text.setFont(cf);
-    p.player1text.setCharacterSize(20);
-    p.player1text.setFillColor(Color::White);
+    p.player1text.setCharacterSize(textSize);
+    p.player1text.setFillColor(textColor);
     p.player1text.setStyle(Text::Bold);
-    p.player1text.setOrigin(0, p.player1text.getLocalBounds().height/2);
-    p.player1text.setString(p.player1);
+    p.player1text.setString(p.player1 == p.ME ? "[YOU]" : "" + p.player1);
 
 
     p.player2text.setFont(cf);
-    p.player2text.setCharacterSize(20);
-    p.player2text.setFillColor(Color::White);
+    p.player2text.setCharacterSize(textSize);
+    p.player2text.setFillColor(textColor);
     p.player2text.setStyle(Text::Bold);
-    p.player2text.setOrigin(0, p.player2text.getLocalBounds().height/2);
-    p.player2text.setString(p.player2);
+    p.player2text.setString(p.player2 == p.ME ? "[YOU]" : "" + p.player2);
 
     p.player3text.setFont(cf);
-    p.player3text.setCharacterSize(20);
-    p.player3text.setFillColor(Color::White);
+    p.player3text.setCharacterSize(textSize);
+    p.player3text.setFillColor(textColor);
     p.player3text.setStyle(Text::Bold);
-    p.player3text.setOrigin(0, p.player3text.getLocalBounds().height/2);
-    p.player3text.setString(p.player3);
+    p.player3text.setString(p.player3 == p.ME ? "[YOU]" : "" + p.player3);
 
     p.player4text.setFont(cf);
-    p.player4text.setCharacterSize(20);
-    p.player4text.setFillColor(Color::White);
+    p.player4text.setCharacterSize(textSize);
+    p.player4text.setFillColor(textColor);
     p.player4text.setStyle(Text::Bold);
-    p.player4text.setOrigin(0, p.player4text.getLocalBounds().height/2);
-    p.player4text.setString(p.player4);
+    p.player4text.setString(p.player4 == p.ME ? "[YOU]" : "" + p.player4);
 
     p.player5text.setFont(cf);
-    p.player5text.setCharacterSize(20);
-    p.player5text.setFillColor(Color::White);
+    p.player5text.setCharacterSize(textSize);
+    p.player5text.setFillColor(textColor);
     p.player5text.setStyle(Text::Bold);
-    p.player5text.setOrigin(0, p.player5text.getLocalBounds().height/2);
-    p.player5text.setString(p.player5);
+    p.player5text.setString(p.player5 == p.ME ? "[YOU]" : "" + p.player5);
 
     p.player6text.setFont(cf);
-    p.player6text.setCharacterSize(20);
-    p.player6text.setFillColor(Color::White);
+    p.player6text.setCharacterSize(textSize);
+    p.player6text.setFillColor(textColor);
     p.player6text.setStyle(Text::Bold);
-    p.player6text.setOrigin(0, p.player6text.getLocalBounds().height/2);
-    p.player6text.setString(p.player6);
+    p.player6text.setString(p.player6 == p.ME ? "[YOU]" : "" + p.player6);
 }
 
 void getUsernamesForConsole(Players& p){
@@ -161,12 +159,12 @@ void ShowPlayerNames(Players& p,RenderWindow* win,Font font,string myName){
     plrs.setStyle(Text::Bold);
     plrs.setPosition(Vector2f(15,15));
 
-    if(p.player1 == myName) playerText += "ME > " + p.player1 + "\n"; else playerText += p.player1 + "\n";
-    if(p.player2 == myName) playerText += "ME > " + p.player2 + "\n"; else playerText += p.player2 + "\n";
-    if(p.player3 == myName) playerText += "ME > " + p.player3 + "\n"; else playerText += p.player3 + "\n";
-    if(p.player4 == myName) playerText += "ME > " + p.player4 + "\n"; else playerText += p.player4 + "\n";
-    if(p.player5 == myName) playerText += "ME > " + p.player5 + "\n"; else playerText += p.player5 + "\n";
-    if(p.player6 == myName) playerText += "ME > " + p.player6 + "\n"; else playerText += p.player6 + "\n";
+    if(p.player1 == myName) playerText += "YOU > " + p.player1 + "\n"; else playerText += p.player1 + "\n";
+    if(p.player2 == myName) playerText += "YOU > " + p.player2 + "\n"; else playerText += p.player2 + "\n";
+    if(p.player3 == myName) playerText += "YOU > " + p.player3 + "\n"; else playerText += p.player3 + "\n";
+    if(p.player4 == myName) playerText += "YOU > " + p.player4 + "\n"; else playerText += p.player4 + "\n";
+    if(p.player5 == myName) playerText += "YOU > " + p.player5 + "\n"; else playerText += p.player5 + "\n";
+    if(p.player6 == myName) playerText += "YOU > " + p.player6 + "\n"; else playerText += p.player6 + "\n";
 
     cout << playerText << endl;
 
