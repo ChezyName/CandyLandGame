@@ -171,15 +171,26 @@ void waitForConnections(RenderWindow* win){
     ShowPlayerNames(allPlayers,win,currentFont,myName);
 }
 
+vector<Spot*> spots;
+
+void DisplaySpots(RenderWindow* window){
+    for(auto spot : spots){
+        window->draw(spot->spotsprite);
+    }
+}
+
 void GameUpdateFrame(RenderWindow* window){
     //BG
     window->draw(gameBG);
 
+    //Spot Sprites
+    DisplaySpots(window);
 
     //UI
     window->draw(PlayerList);
     DisplayPlayerIcons(allPlayers,window);
     DisplayPlayersText(allPlayers,window);
+
 
     //Get Socket Updates
     Packet data;
@@ -194,9 +205,11 @@ void GameUpdateFrame(RenderWindow* window){
             data >> spotSize;
             cout << "Creating Map Of Size[v2]" << spotSize << endl;
             for(int i = 0; i < spotSize; i++){
-                Spot newSpot;
+                prespot newSpot;
                 data >> newSpot;
-                cout << "NAME:" << newSpot.name << newSpot.xPos << newSpot.yPos << endl;
+                Spot* newS = new Spot(newSpot.x,newSpot.y,newSpot.n);
+                newS->createSprite();
+                spots.push_back(newS);
             }
         }
     }

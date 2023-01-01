@@ -121,7 +121,7 @@ void runCommands(){
             printf("===========================\n");
         }
         else if(input == "start"){
-            if(players.player1 != nullptr && players.player2 != nullptr){
+            if(players.player1 != nullptr){
                 gameStarted = true;
                 Packet p;
                 p << "Start";
