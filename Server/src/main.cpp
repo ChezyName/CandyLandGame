@@ -80,6 +80,9 @@ void getPlayerData(Player* p){
                 p->setPosition(s->xPos,s->yPos);
                 setNextPlayer();
             }
+            else if(dn == "SKIP"){
+                setNextPlayer();
+            }
         }
     }
 }

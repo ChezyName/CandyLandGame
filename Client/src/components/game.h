@@ -41,6 +41,7 @@ Texture gameBGT;
 Vector2i MousePosition;
 
 Button* RollDice;
+Button* SkipTurn;
 
 void setMousePosition(int x, int y){
     MousePosition.x = x;
@@ -168,6 +169,7 @@ void CreatePlayerSprites(RenderWindow* w){
 
     //Create buttons
     RollDice = new Button("Roll Dice",1280-250,25,200,50,currentFont);
+    SkipTurn = new Button("Skip Turn",1280-250,650,200,50,currentFont);
 }
 
 void waitForConnections(RenderWindow* win){
@@ -216,6 +218,7 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
     //UI
     UpdatePanel(window,Lclock);
     UpdateButton(RollDice,window,MousePosition);
+    UpdateButton(SkipTurn,window,MousePosition);
 
     window->draw(PlayerList);
     DisplayPlayerIcons(allPlayers,window);
@@ -279,6 +282,12 @@ void onMouseClicked(int x, int y){
             Packet p;
             p << "DICE";
             p << r;
+            playerSocket->getSocket()->send(p);
+            hasDone = true;
+        }
+        else if(SkipTurn->buttonClicked(MousePosition)){
+            Packet p;
+            p << "SKIP";
             playerSocket->getSocket()->send(p);
             hasDone = true;
         }
