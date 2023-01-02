@@ -49,6 +49,10 @@ bool getRandomBool(){
     return randomval == 1;
 };
 
+BasicSpot* CreateRandomSpot(int x,int y){
+    return (new EmptySpot(x,y));
+}
+
 vector<BasicSpot*> createSpots(){
     vector<BasicSpot*> Spots;
 
@@ -60,162 +64,162 @@ vector<BasicSpot*> createSpots(){
 
     x += 16;
     y += 75;
-    BasicSpot* S = new EmptySpot(x,y);
+    BasicSpot* S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 8;
     y += 75;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
     
     x += 16;
     y += 75;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 80;
     y += 0;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 80;
     y += 0;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 45;
     y += 88;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 15;
     y += 90;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 32;
     y += 90;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 75;
     y += 15;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 72;
     y += -32;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 55;
     y += -75;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += -45;
     y += -85;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += -80;
     y += -24;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += -15;
     y += -90;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += -25;
     y += -85;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 32;
     y += -75;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 80;
     y += -30;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 80;
     y += -15;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 80;
     y += 0;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 80;
     y += 15;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 80;
     y += 32;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 90;
     y += 16;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
-    x += 0;
+    x += 15;
     y += 90;
-    S = new EmptySpot(x,y);
-    Spots.push_back(S);
-
-    x += 0;
-    y += 90;
-    S = new EmptySpot(x,y);
-    Spots.push_back(S);
-
-    x += -90;
-    y += 8;
-    S = new EmptySpot(x,y);
-    Spots.push_back(S);
-
-    x += -68;
-    y += 68;
-    S = new EmptySpot(x,y);
-    Spots.push_back(S);
-
-    x += -68;
-    y += 68;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += -15;
     y += 90;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
+    Spots.push_back(S);
+
+    x += -90;
+    y += 8;
+    S = CreateRandomSpot(x,y);
+    Spots.push_back(S);
+
+    x += -68;
+    y += 68;
+    S = CreateRandomSpot(x,y);
+    Spots.push_back(S);
+
+    x += -68;
+    y += 68;
+    S = CreateRandomSpot(x,y);
+    Spots.push_back(S);
+
+    x += -15;
+    y += 90;
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 15;
     y += 90;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 90;
     y += 15;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 32;
     y += -80;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 15;
     y += -80;
-    S = new EmptySpot(x,y);
+    S = CreateRandomSpot(x,y);
     Spots.push_back(S);
 
     x += 75;

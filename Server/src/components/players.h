@@ -12,8 +12,11 @@ class Player {
     public:
         Player(TcpSocket* Socket,std::string Name){
             Client = Socket;
+            Client->setBlocking(false);
             Username = Name;
         }
+
+        const TcpSocket* getSocket() {return Client;}
 
         const string& getUsername() { return Username; }
         

@@ -10,6 +10,7 @@ Font cf;
 struct Players
 {
     string ME;
+    string personTurn = "";
 
     string player1;
     Texture player1t;
@@ -111,8 +112,29 @@ void DisplayPlayerIcons(Players& p,RenderWindow* win){
     if(!p.player6.empty()) win->draw(p.player6c);
 }
 
+void UpdateSelectedPlayer(Players& p){
+    if(p.player1 == p.personTurn) p.player1text.setString((p.player1 == p.ME ? "ME" : p.player1) + " <");
+    else p.player1text.setString(p.player1 == p.ME ? "ME" : p.player1);
+
+    if(p.player2 == p.personTurn) p.player2text.setString((p.player2 == p.ME ? "ME" : p.player2) + " <");
+    else p.player2text.setString(p.player2 == p.ME ? "ME" : p.player2);
+
+    if(p.player3 == p.personTurn) p.player3text.setString((p.player3 == p.ME ? "ME" : p.player3) + " <");
+    else p.player3text.setString(p.player3 == p.ME ? "ME" : p.player3);
+
+    if(p.player4 == p.personTurn) p.player4text.setString((p.player4 == p.ME ? "ME" : p.player4) + " <");
+    else p.player4text.setString(p.player4 == p.ME ? "ME" : p.player4);
+
+    if(p.player5 == p.personTurn) p.player5text.setString((p.player5 == p.ME ? "ME" : p.player5) + " <");
+    else p.player5text.setString(p.player5 == p.ME ? "ME" : p.player5);
+
+    if(p.player6 == p.personTurn) p.player6text.setString((p.player6 == p.ME ? "ME" : p.player6) + " <");
+    else p.player6text.setString(p.player6 == p.ME ? "ME" : p.player6);
+}
+
 void DisplayPlayersText(Players& p,RenderWindow* win){
     //cout << "Drawing Player Text @ " << p.player1text.getPosition().x << "," << p.player1text.getPosition().y << endl;
+    UpdateSelectedPlayer(p);
 
     if(!p.player1.empty()) win->draw(p.player1text);
     if(!p.player2.empty()) win->draw(p.player2text);

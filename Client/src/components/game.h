@@ -4,6 +4,7 @@
 
 #include "players.h"
 #include "spot.h"
+#include "button.h"
 
 using namespace std;
 using namespace sf;
@@ -36,6 +37,15 @@ RectangleShape Interact(Vector2f(600,720));
 
 RectangleShape gameBG;
 Texture gameBGT;
+
+Vector2i MousePosition;
+
+Button* RollDice;
+
+void setMousePosition(int x, int y){
+    MousePosition.x = x;
+    MousePosition.y = y;
+}
 
 void ConnectToServer(String IP,String Name,RenderWindow* Window,Font F){
     playerSocket = new GSocket(IP,Name);
@@ -124,8 +134,7 @@ void CreatePlayerSprites(RenderWindow* w){
     int xs = (allPlayers.player1c.getLocalBounds().width/2);
     int ys = (allPlayers.player1c.getLocalBounds().height);
 
-    //PlayerList.setSize(Vector2f(250,ys*GetPlayerCount(allPlayers)));
-    PlayerList.setSize(Vector2f(250,ys*6));
+    PlayerList.setSize(Vector2f(250,ys*GetPlayerCount(allPlayers)));
 
     Interact.setPosition(1280-(Interact.getLocalBounds().width/2),0);
     Interact.setFillColor(Color(80,80,80,255));
@@ -150,6 +159,9 @@ void CreatePlayerSprites(RenderWindow* w){
     gameBGT.loadFromFile("Assets/BG.png");
     gameBG.setTexture(&gameBGT);
     gameBG.setSize(Vector2f(x*2,y*2));
+
+    //Create buttons
+    RollDice = new Button("Roll Dice",1280-250,25,200,50,currentFont);
 }
 
 void waitForConnections(RenderWindow* win){
@@ -184,6 +196,7 @@ void DisplaySpots(RenderWindow* window){
     }
 }
 
+bool myTurn = false;
 void GameUpdateFrame(RenderWindow* window){
     //BG
     window->draw(gameBG);
@@ -192,7 +205,6 @@ void GameUpdateFrame(RenderWindow* window){
     DisplaySpots(window);
 
     //UI
-    window->draw(Interact);
     window->draw(PlayerList);
     DisplayPlayerIcons(allPlayers,window);
     DisplayPlayersText(allPlayers,window);
@@ -218,5 +230,32 @@ void GameUpdateFrame(RenderWindow* window){
                 spots.push_back(newS);
             }
         }
+        else if(dataName == "CPLR"){
+            string name;
+            data >> name;
+            cout << "PLR NAME:" << name << endl;
+            cout << "MYNAME: " << allPlayers.player1 << endl;
+            allPlayers.personTurn = name;
+            if(allPlayers.ME == name){
+                myTurn = true;
+            }
+            else {
+                myTurn = false;
+            }
+        }
+    }
+
+    //if its my turn
+    if(myTurn){
+        //our play
+        window->draw(Interact);
+        RollDice->UpdateButton(window,MousePosition);
+    }
+}
+
+void onMouseClicked(int x, int y){
+    if(myTurn){
+        setMousePosition(x,y);
+        RollDice->buttonClicked(MousePosition);
     }
 }

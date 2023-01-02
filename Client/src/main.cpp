@@ -47,6 +47,12 @@ int main()
                 cout << "KeyCode: " << (event.text.unicode) << endl;
                 MainMenu->addText(event.text.unicode,&window);
             }
+            if(event.type == Event::MouseMoved && GS == Gameplay){
+                setMousePosition(Mouse::getPosition(window).x,Mouse::getPosition(window).y);
+            }
+            if(event.type == Event::MouseButtonPressed && GS == Gameplay){
+                onMouseClicked(Mouse::getPosition(window).x,Mouse::getPosition(window).y);
+            }
         }
 
         switch (GS)

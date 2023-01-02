@@ -13,3 +13,5 @@ bool gameStarted = false;
 
 void runCommands();
 void letJoin();
+void gameplayLoop();
+void sendCPlayer();

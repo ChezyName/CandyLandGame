@@ -20,9 +20,17 @@ int main()
         if(gameStarted == false){
             letJoin();
         }
+        else {
+            gameplayLoop();
+        }
     }
 
     return 0;
+}
+
+int cPlayer = 1;
+void gameplayLoop(){
+    
 }
 
 void createSpotsForAll(){
@@ -37,6 +45,20 @@ void createSpotsForAll(){
     }
 
     cout << "Map was loaded on size " << spots.size() << endl;
+
+    sendPacketToAll(players,p);
+    sendCPlayer();
+}
+
+void sendCPlayer(){
+    Packet p;
+    p << "CPLR";
+    if(cPlayer == 1) p << players.player1name;
+    else if(cPlayer == 2) p << players.player2name;
+    else if(cPlayer == 3) p << players.player3name;
+    else if(cPlayer == 4) p << players.player4name;
+    else if(cPlayer == 5) p << players.player5name;
+    else if(cPlayer == 6) p << players.player6name;
 
     sendPacketToAll(players,p);
 }
