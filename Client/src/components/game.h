@@ -32,6 +32,7 @@ Font currentFont;
 string myName;
 bool startGame = false;
 RectangleShape PlayerList(Vector2f(400,80*6));
+RectangleShape Interact(Vector2f(600,720));
 
 RectangleShape gameBG;
 Texture gameBGT;
@@ -123,7 +124,11 @@ void CreatePlayerSprites(RenderWindow* w){
     int xs = (allPlayers.player1c.getLocalBounds().width/2);
     int ys = (allPlayers.player1c.getLocalBounds().height);
 
-    PlayerList.setSize(Vector2f(250,ys*GetPlayerCount(allPlayers)));
+    //PlayerList.setSize(Vector2f(250,ys*GetPlayerCount(allPlayers)));
+    PlayerList.setSize(Vector2f(250,ys*6));
+
+    Interact.setPosition(1280-(Interact.getLocalBounds().width/2),0);
+    Interact.setFillColor(Color(80,80,80,255));
 
     createPlayerTextObjs(allPlayers);
 
@@ -187,6 +192,7 @@ void GameUpdateFrame(RenderWindow* window){
     DisplaySpots(window);
 
     //UI
+    window->draw(Interact);
     window->draw(PlayerList);
     DisplayPlayerIcons(allPlayers,window);
     DisplayPlayersText(allPlayers,window);

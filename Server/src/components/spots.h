@@ -28,7 +28,7 @@ struct StartingSpot : public BasicSpot
 
 struct FinalSpot : public BasicSpot
 {
-    FinalSpot(int x,int y) : BasicSpot(x,y,"FINAL") {}
+    FinalSpot(int x,int y) : BasicSpot(x,y,"END") {}
 
     virtual void onPlayerStandOn(class Player* p) override {
         cout << "BASIC SPOT" << endl;
@@ -73,18 +73,28 @@ vector<BasicSpot*> createSpots(){
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
-    x += 24;
-    y += 80;
-    S = new EmptySpot(x,y);
-    Spots.push_back(S);
-
-    x += 32;
-    y += 68;
+    x += 80;
+    y += 0;
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
     x += 80;
-    y += 40;
+    y += 0;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += 45;
+    y += 88;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += 15;
+    y += 90;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += 32;
+    y += 90;
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
@@ -93,18 +103,8 @@ vector<BasicSpot*> createSpots(){
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
-    x += 75;
-    y += 15;
-    S = new EmptySpot(x,y);
-    Spots.push_back(S);
-
-    x += 75;
-    y += -30;
-    S = new EmptySpot(x,y);
-    Spots.push_back(S);
-
-    x += 65;
-    y += -65;
+    x += 72;
+    y += -32;
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
@@ -123,8 +123,8 @@ vector<BasicSpot*> createSpots(){
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
-    x += -128;
-    y += -24;
+    x += -15;
+    y += -90;
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
@@ -133,13 +133,23 @@ vector<BasicSpot*> createSpots(){
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
-    x += 45;
-    y += -85;
+    x += 32;
+    y += -75;
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
     x += 80;
-    y += 12;
+    y += -30;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += 80;
+    y += -15;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += 80;
+    y += 0;
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
@@ -149,18 +159,68 @@ vector<BasicSpot*> createSpots(){
     Spots.push_back(S);
 
     x += 80;
-    y += 18;
+    y += 32;
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
-    x += 60;
-    y += 24;
+    x += 90;
+    y += 16;
     S = new EmptySpot(x,y);
     Spots.push_back(S);
 
-    x += 70;
+    x += 0;
+    y += 90;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += 0;
+    y += 90;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += -90;
+    y += 8;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += -68;
+    y += 68;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += -68;
+    y += 68;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += -15;
+    y += 90;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += 15;
+    y += 90;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += 90;
     y += 15;
     S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += 32;
+    y += -80;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += 15;
+    y += -80;
+    S = new EmptySpot(x,y);
+    Spots.push_back(S);
+
+    x += 75;
+    y += 0;
+    S = new FinalSpot(x,y);
     Spots.push_back(S);
 
     return Spots;
