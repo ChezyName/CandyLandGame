@@ -35,6 +35,10 @@ public:
         ButtonText.setPosition(ButtonShape.getPosition().x + (ButtonShape.getLocalBounds().width/2),ButtonShape.getPosition().y + (ButtonShape.getLocalBounds().height/2));
     }
 
+    void setText(string T){
+        ButtonText.setString(T);
+    }
+
     void UpdateButton(RenderWindow* w,Vector2i cursorPos){
 
         if (isHovering(cursorPos)){
@@ -50,9 +54,11 @@ public:
         w->draw(ButtonText);
     }
 
-    void buttonClicked(Vector2i mouse){
+    bool buttonClicked(Vector2i mouse){
         if(isHovering(mouse)){
             cout << "Clicked On Button : " << ButtonText.getString().toAnsiString().c_str() << endl;
+            return true;
         }
+        else return false;
     }
 };

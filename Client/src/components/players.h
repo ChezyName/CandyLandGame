@@ -1,11 +1,17 @@
 #include <SFML/Network.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 using namespace sf;
 
 Font cf;
+
+float lerp(float a, float b, float t)
+{
+    return a * (1.0 - t) + (b * t);
+}
 
 struct Players
 {
@@ -201,5 +207,25 @@ sf::Packet& operator <<(sf::Packet& packet, const Players& p)
 
 sf::Packet& operator >>(sf::Packet& packet, Players& p)
 {
-    return packet >> p.player1 >> p.player2 >> p.player3 >> p.player4 >> p.player5 >> p.player6;
+    packet >> p.player1 >> p.player2 >> p.player3 >> p.player4 >> p.player5 >> p.player6;
+    return packet;
+}
+
+void getPlayerPositions(sf::Packet& packet, Players& p){
+    int x = 0;
+    int y = 0;
+    packet >> x >> y;
+    x += 40;
+    y += 30;
+    p.player1s.setPosition(x,720-y);
+
+    packet >> x >> y;
+    x += 40;
+    y += 45;
+    p.player2s.setPosition(x,720-y);
+
+    packet >> x >> y;
+    x += 40;
+    y += 60;
+    p.player3s.setPosition(x,720-y);
 }

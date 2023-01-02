@@ -30,7 +30,8 @@ int main()
 
 int cPlayer = 1;
 void gameplayLoop(){
-    
+    UpdatePlayerPositions();
+    cout << "Frame Loop." << endl;
 }
 
 void createSpotsForAll(){
@@ -48,6 +49,26 @@ void createSpotsForAll(){
 
     sendPacketToAll(players,p);
     sendCPlayer();
+
+    //set player positions to first spot
+    setAllPlayersPos(spots.front()->xPos,spots.front()->yPos);
+    gameStarted = true;
+}
+
+void setAllPlayersPos(int x, int y){
+    if(!players.player1name.empty()) players.player1->setPosition(x,y);
+    if(!players.player2name.empty()) players.player2->setPosition(x,y);
+    if(!players.player3name.empty()) players.player3->setPosition(x,y);
+    if(!players.player4name.empty()) players.player4->setPosition(x,y);
+    if(!players.player5name.empty()) players.player5->setPosition(x,y);
+    if(!players.player6name.empty()) players.player6->setPosition(x,y);
+}
+
+void UpdatePlayerPositions(){
+    Packet pl;
+    pl << "PLoc";
+    sendPlayerPosition(pl,players);
+    sendPacketToAll(players,pl);
 }
 
 void sendCPlayer(){

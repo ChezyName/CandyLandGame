@@ -15,3 +15,5 @@ void runCommands();
 void letJoin();
 void gameplayLoop();
 void sendCPlayer();
+void UpdatePlayerPositions();
+void setAllPlayersPos(int x, int y);

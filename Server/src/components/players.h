@@ -10,6 +10,9 @@ class Player {
         std::string Username;
 
     public:
+        int x = -999;
+        int y = -999;
+
         Player(TcpSocket* Socket,std::string Name){
             Client = Socket;
             Client->setBlocking(false);
@@ -22,6 +25,11 @@ class Player {
         
         void sendPacket(Packet p) {
             Client->send(p);
+        }
+
+        void setPosition(int nx,int ny){
+            x = nx;
+            y = ny;
         }
 };
 
@@ -73,4 +81,13 @@ void getUsernamesForConsole(Players& p){
 sf::Packet& operator <<(sf::Packet& packet, const Players& p)
 {
     return packet << p.player1name << p.player2name << p.player3name << p.player4name << p.player5name << p.player6name;
+}
+
+void sendPlayerPosition(sf::Packet& packet,Players& p){
+    if(p.player1 != nullptr) packet << p.player1->x << p.player1->y; else packet << -999 << -999;
+    if(p.player2 != nullptr) packet << p.player2->x << p.player2->y; else packet << -999 << -999;
+    if(p.player3 != nullptr) packet << p.player3->x << p.player3->y; else packet << -999 << -999;
+    if(p.player4 != nullptr) packet << p.player4->x << p.player4->y; else packet << -999 << -999;
+    if(p.player5 != nullptr) packet << p.player5->x << p.player5->y; else packet << -999 << -999;
+    if(p.player6 != nullptr) packet << p.player6->x << p.player6->y; else packet << -999 << -999;
 }

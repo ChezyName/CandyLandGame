@@ -155,6 +155,13 @@ void CreatePlayerSprites(RenderWindow* w){
     allPlayers.player5text.setPosition(xs*2,ys*4.25);
     allPlayers.player6text.setPosition(xs*2,ys*5.25);
 
+    allPlayers.player1s.setScale(Vector2f(0.5,0.5));
+    allPlayers.player2s.setScale(Vector2f(0.5,0.5));
+    allPlayers.player3s.setScale(Vector2f(0.5,0.5));
+    allPlayers.player4s.setScale(Vector2f(0.5,0.5));
+    allPlayers.player5s.setScale(Vector2f(0.5,0.5));
+    allPlayers.player6s.setScale(Vector2f(0.5,0.5));
+
     //Change Background
     gameBGT.loadFromFile("Assets/BG.png");
     gameBG.setTexture(&gameBGT);
@@ -197,12 +204,14 @@ void DisplaySpots(RenderWindow* window){
 }
 
 bool myTurn = false;
+bool hasDone = false;
 void GameUpdateFrame(RenderWindow* window){
     //BG
     window->draw(gameBG);
 
     //Spot Sprites
     DisplaySpots(window);
+    DisplayPlayers(allPlayers,window);
 
     //UI
     window->draw(PlayerList);
@@ -238,10 +247,15 @@ void GameUpdateFrame(RenderWindow* window){
             allPlayers.personTurn = name;
             if(allPlayers.ME == name){
                 myTurn = true;
+                RollDice->setText("Roll Dice");
+                hasDone = false;
             }
             else {
                 myTurn = false;
             }
+        }
+        else if(dataName == "PLoc"){
+            getPlayerPositions(data,allPlayers);
         }
     }
 
@@ -254,8 +268,20 @@ void GameUpdateFrame(RenderWindow* window){
 }
 
 void onMouseClicked(int x, int y){
-    if(myTurn){
+    if(myTurn && !hasDone){
         setMousePosition(x,y);
-        RollDice->buttonClicked(MousePosition);
+        if(RollDice->buttonClicked(MousePosition)){
+            //Roll The Dice
+            int r = rand() % 6 + 1;
+            cout << "Rolled : " << r << endl;
+            string RolledTxt = std::to_string(r);
+            RollDice->setText(RolledTxt);
+
+            Packet p;
+            p << "Dice";
+            p << r;
+            playerSocket->getSocket()->send(p);
+            hasDone = true;
+        }
     }
 }
