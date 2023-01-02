@@ -31,7 +31,6 @@ int main()
 int cPlayer = 1;
 void gameplayLoop(){
     UpdatePlayerPositions();
-    cout << "Frame Loop." << endl;
 }
 
 void createSpotsForAll(){

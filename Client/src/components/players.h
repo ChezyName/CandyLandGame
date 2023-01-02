@@ -215,17 +215,33 @@ void getPlayerPositions(sf::Packet& packet, Players& p){
     int x = 0;
     int y = 0;
     packet >> x >> y;
-    x += 40;
-    y += 30;
+    x += -35;
+    y += -15;
     p.player1s.setPosition(x,720-y);
 
     packet >> x >> y;
-    x += 40;
-    y += 45;
+    x += 0;
+    y += -15;
     p.player2s.setPosition(x,720-y);
 
     packet >> x >> y;
-    x += 40;
-    y += 60;
+    x += 35;
+    y += -15;
     p.player3s.setPosition(x,720-y);
+
+    packet >> x >> y;
+    x += -35;
+    y += 15;
+    p.player4s.setPosition(x,720-y);
+
+    packet >> x >> y;
+    x += 0;
+    y += 15;
+    p.player5s.setPosition(x,720-y);
+
+    packet >> x >> y;
+    x += 35;
+    y += 15;
+    p.player6s.setPosition(x,720-y);
+    
 }
