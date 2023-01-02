@@ -56,7 +56,7 @@ public:
                     if(UsernameText.getSize() > 0) UsernameText.erase(UsernameText.getSize() - 1, 1);
                 }
                 else{
-                    if(UsernameText.getSize() < 24) UsernameText += unicode;
+                    if(UsernameText.getSize() < 12) UsernameText += unicode;
                 }
             }
             Username.setString("Username: " + UsernameText);

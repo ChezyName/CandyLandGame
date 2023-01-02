@@ -242,9 +242,8 @@ void GameUpdateFrame(RenderWindow* window){
         else if(dataName == "CPLR"){
             string name;
             data >> name;
-            cout << "PLR NAME:" << name << endl;
-            cout << "MYNAME: " << allPlayers.player1 << endl;
             allPlayers.personTurn = name;
+            cout << "Player Was Chosen: " << name << endl;
             if(allPlayers.ME == name){
                 myTurn = true;
                 RollDice->setText("Roll Dice");
@@ -278,7 +277,7 @@ void onMouseClicked(int x, int y){
             RollDice->setText(RolledTxt);
 
             Packet p;
-            p << "Dice";
+            p << "DICE";
             p << r;
             playerSocket->getSocket()->send(p);
             hasDone = true;

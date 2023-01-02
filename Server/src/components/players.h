@@ -12,6 +12,7 @@ class Player {
     public:
         int x = -999;
         int y = -999;
+        int spotIndex = 0;
 
         Player(TcpSocket* Socket,std::string Name){
             Client = Socket;
@@ -19,7 +20,7 @@ class Player {
             Username = Name;
         }
 
-        const TcpSocket* getSocket() {return Client;}
+        TcpSocket* getSocket() { return Client; }
 
         const string& getUsername() { return Username; }
         

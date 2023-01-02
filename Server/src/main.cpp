@@ -30,12 +30,62 @@ int main()
 
 int cPlayer = 1;
 void gameplayLoop(){
+    if(cPlayer == 1) getPlayerData(players.player1);
+    else if(cPlayer == 2) getPlayerData(players.player2);
+    else if(cPlayer == 3) getPlayerData(players.player3);
+    else if(cPlayer == 4) getPlayerData(players.player4);
+    else if(cPlayer == 5) getPlayerData(players.player5);
+    else if(cPlayer == 6) getPlayerData(players.player6);
+}
+
+int setNextPlayingPlayer(){
+    cPlayer++;
+    if(cPlayer == 1 && players.player1 == nullptr) return setNextPlayingPlayer();
+    else if(cPlayer == 2 && players.player2 == nullptr) return setNextPlayingPlayer();
+    else if(cPlayer == 3 && players.player3 == nullptr) return setNextPlayingPlayer();
+    else if(cPlayer == 4 && players.player4 == nullptr) return setNextPlayingPlayer();
+    else if(cPlayer == 5 && players.player5 == nullptr) return setNextPlayingPlayer();
+    else if(cPlayer == 6 && players.player6 == nullptr) return setNextPlayingPlayer();
+    if(cPlayer >= 7){
+        cPlayer = 0;
+        cPlayer = setNextPlayingPlayer();
+    }
+}
+
+void setNextPlayer(){
+    cPlayer = setNextPlayingPlayer();
     UpdatePlayerPositions();
+    sendCPlayer();
+}
+
+void getPlayerData(Player* p){
+    Packet data;
+    if(p != nullptr){
+        p->getSocket()->receive(data);
+
+        if(data.getDataSize() > 0){
+            string dn;
+            data >> dn;
+            if(dn == "DICE"){
+                //rolled Dice
+                int m;
+                data >> m;
+                cout << "\n" << endl;
+                cout << p->getUsername() << " ROLLED THE DICE AND GOT #" << m << ", Moving Player." << endl;
+                p->spotIndex += m;
+                p->spotIndex = clamp(p->spotIndex,0,spots.size());
+                BasicSpot* s = spots[p->spotIndex];
+                cout << "Old Position Was: " << p->x << "," << p->y << ". New Position is: " << s->xPos << "," << s->yPos << "." << endl; 
+                p->setPosition(s->xPos,s->yPos);
+                setNextPlayer();
+            }
+        }
+    }
 }
 
 void createSpotsForAll(){
     cout << "Creating Map, Please Wait..." << endl;
-    vector<BasicSpot*> spots = createSpots();
+    spots = createSpots();
     Packet p;
     p << "MAP";
     p << spots.size();
@@ -61,6 +111,7 @@ void setAllPlayersPos(int x, int y){
     if(!players.player4name.empty()) players.player4->setPosition(x,y);
     if(!players.player5name.empty()) players.player5->setPosition(x,y);
     if(!players.player6name.empty()) players.player6->setPosition(x,y);
+    UpdatePlayerPositions();
 }
 
 void UpdatePlayerPositions(){
@@ -79,7 +130,6 @@ void sendCPlayer(){
     else if(cPlayer == 4) p << players.player4name;
     else if(cPlayer == 5) p << players.player5name;
     else if(cPlayer == 6) p << players.player6name;
-
     sendPacketToAll(players,p);
 }
 
