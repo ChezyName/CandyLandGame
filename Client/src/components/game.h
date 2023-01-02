@@ -205,11 +205,12 @@ void DisplaySpots(RenderWindow* window){
 
 bool myTurn = false;
 bool hasDone = false;
-void GameUpdateFrame(RenderWindow* window){
+void GameUpdateFrame(RenderWindow* window,Clock Lclock){
     //BG
     window->draw(gameBG);
 
     //Spot Sprites
+    lerpPlayerPositions(allPlayers,Lclock);
     DisplaySpots(window);
     DisplayPlayers(allPlayers,window);
 
@@ -254,6 +255,10 @@ void GameUpdateFrame(RenderWindow* window){
             }
         }
         else if(dataName == "PLoc"){
+            getPlayerPositionsLerp(data,allPlayers);
+            onSecondstart(Lclock.getElapsedTime().asSeconds());
+        }
+        else if(dataName == "FPLoc"){
             getPlayerPositions(data,allPlayers);
         }
     }
@@ -271,7 +276,7 @@ void onMouseClicked(int x, int y){
         setMousePosition(x,y);
         if(RollDice->buttonClicked(MousePosition)){
             //Roll The Dice
-            int r = rand() % 6 + 1;
+            int r = rand() % 4 + 1;
             cout << "Rolled : " << r << endl;
             string RolledTxt = std::to_string(r);
             RollDice->setText(RolledTxt);

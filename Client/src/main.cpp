@@ -18,9 +18,11 @@ int main()
     MenuComponent* MainMenu = new MenuComponent();
 
     float fps;
-    Clock clock;;
-    Time previousTime = clock.getElapsedTime();
+    Clock FPSClock;
+    Time previousTime = FPSClock.getElapsedTime();
     Time currentTime;
+
+    Clock pLerpClock;
 
     Font arial;
     font.loadFromFile("Arial.ttf");
@@ -66,13 +68,13 @@ int main()
                 if(hasGameStarted()) GS = Gameplay;
                 break;
             case Gameplay:
-                GameUpdateFrame(&window);
+                GameUpdateFrame(&window,pLerpClock);
             default:
                 break;
         }
 
         //FPS
-        currentTime = clock.getElapsedTime();
+        currentTime = FPSClock.getElapsedTime();
         fps = 1.0f / (currentTime.asSeconds() - previousTime.asSeconds()); // the asSeconds returns a float
         FPSText.setString(std::to_string((int)(floor(fps))) + "FPS");
         previousTime = currentTime;

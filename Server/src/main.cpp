@@ -50,6 +50,7 @@ int setNextPlayingPlayer(){
         cPlayer = 0;
         cPlayer = setNextPlayingPlayer();
     }
+    return cPlayer;
 }
 
 void setNextPlayer(){
@@ -111,7 +112,10 @@ void setAllPlayersPos(int x, int y){
     if(!players.player4name.empty()) players.player4->setPosition(x,y);
     if(!players.player5name.empty()) players.player5->setPosition(x,y);
     if(!players.player6name.empty()) players.player6->setPosition(x,y);
-    UpdatePlayerPositions();
+    Packet pl;
+    pl << "FPLoc";
+    sendPlayerPosition(pl,players);
+    sendPacketToAll(players,pl);
 }
 
 void UpdatePlayerPositions(){
@@ -149,6 +153,13 @@ void letJoin(){
         Username >> UsernamePacket;
         Username.clear();
     }
+
+    if(players.player1 != nullptr && players.player1->getUsername() == UsernamePacket) return;
+    if(players.player2 != nullptr && players.player2->getUsername() == UsernamePacket) return;
+    if(players.player3 != nullptr && players.player3->getUsername() == UsernamePacket) return;
+    if(players.player4 != nullptr && players.player4->getUsername() == UsernamePacket) return;
+    if(players.player5 != nullptr && players.player5->getUsername() == UsernamePacket) return;
+    if(players.player6 != nullptr && players.player6->getUsername() == UsernamePacket) return;
 
     cout << UsernamePacket + " joined from " + socket->getRemoteAddress().toString() << endl;
 

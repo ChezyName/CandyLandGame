@@ -2,16 +2,12 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <cmath>
+#include <chrono>
 
 using namespace std;
 using namespace sf;
 
 Font cf;
-
-float lerp(float a, float b, float t)
-{
-    return a * (1.0 - t) + (b * t);
-}
 
 struct Players
 {
@@ -23,36 +19,42 @@ struct Players
     Sprite player1s;
     Sprite player1c;
     Text player1text;
+    Vector2f player1p;
 
     string player2;
     Texture player2t;
     Sprite player2s;
     Sprite player2c;
     Text player2text;
+    Vector2f player2p;
 
     string player3;
     Texture player3t;
     Sprite player3s;
     Sprite player3c;
     Text player3text;
+    Vector2f player3p;
 
     string player4;
     Texture player4t;
     Sprite player4s;
     Sprite player4c;
     Text player4text;
+    Vector2f player4p;
 
     string player5;
     Texture player5t;
     Sprite player5s;
     Sprite player5c;
     Text player5text;
+    Vector2f player5p;
 
     string player6;
     Texture player6t;
     Sprite player6s;
     Sprite player6c;
     Text player6text;
+    Vector2f player6p;
 };
 
 void createPlayerTextObjs(Players& p){
@@ -218,30 +220,111 @@ void getPlayerPositions(sf::Packet& packet, Players& p){
     x += -35;
     y += -15;
     p.player1s.setPosition(x,720-y);
+    p.player1p.x = x;
+    p.player1p.y = y;
 
     packet >> x >> y;
     x += 0;
     y += -15;
     p.player2s.setPosition(x,720-y);
+    p.player2p.x = x;
+    p.player2p.y = y;
 
     packet >> x >> y;
     x += 35;
     y += -15;
     p.player3s.setPosition(x,720-y);
+    p.player3p.x = x;
+    p.player3p.y = y;
 
     packet >> x >> y;
     x += -35;
     y += 15;
     p.player4s.setPosition(x,720-y);
+    p.player4p.x = x;
+    p.player4p.y = y;
 
     packet >> x >> y;
     x += 0;
     y += 15;
     p.player5s.setPosition(x,720-y);
+    p.player5p.x = x;
+    p.player5p.y = y;
 
     packet >> x >> y;
     x += 35;
     y += 15;
     p.player6s.setPosition(x,720-y);
-    
+    p.player6p.x = x;
+    p.player6p.y = y;
+}
+
+void getPlayerPositionsLerp(sf::Packet& packet, Players& p){
+    int x = 0;
+    int y = 0;
+    packet >> x >> y;
+    x += -35;
+    y += -15;
+    p.player1p.x = x;
+    p.player1p.y = y;
+
+    packet >> x >> y;
+    x += 0;
+    y += -15;
+    p.player2p.x = x;
+    p.player2p.y = y;
+
+    packet >> x >> y;
+    x += 35;
+    y += -15;
+    p.player3p.x = x;
+    p.player3p.y = y;
+
+    packet >> x >> y;
+    x += -35;
+    y += 15;
+    p.player4p.x = x;
+    p.player4p.y = y;
+
+    packet >> x >> y;
+    x += 0;
+    y += 15;
+    p.player5p.x = x;
+    p.player5p.y = y;
+
+    packet >> x >> y;
+    x += 35;
+    y += 15;
+    p.player6p.x = x;
+    p.player6p.y = y;
+}
+
+float start;
+void onSecondstart(float f){
+    start = f;
+}
+
+float clamp(float x, float min, float max){
+    if(x >= max) return max;
+    if(x <= min) return min;
+    return x;
+}
+
+float lerp(float a, float b, float t)
+{
+    t = clamp(t,0,1);
+    cout << "Returning @ T: " << t << " & " <<  (t * (b-a) + a) << endl;
+    return t * (b-a) + a;
+}
+
+void lerpPlayerPositions(Players& p,Clock c){
+    float seconds = c.getElapsedTime().asSeconds() - start;
+    float time = seconds/5;
+
+    p.player1s.setPosition(lerp(p.player1s.getPosition().x,p.player1p.x,time),lerp(p.player1s.getPosition().y,720-p.player1p.y,time));
+    p.player2s.setPosition(lerp(p.player2s.getPosition().x,p.player2p.x,time),lerp(p.player2s.getPosition().y,720-p.player2p.y,time));
+    p.player3s.setPosition(lerp(p.player3s.getPosition().x,p.player3p.x,time),lerp(p.player3s.getPosition().y,720-p.player3p.y,time));
+    p.player4s.setPosition(lerp(p.player4s.getPosition().x,p.player4p.x,time),lerp(p.player4s.getPosition().y,720-p.player4p.y,time));
+    p.player5s.setPosition(lerp(p.player5s.getPosition().x,p.player5p.x,time),lerp(p.player5s.getPosition().y,720-p.player5p.y,time));
+    p.player6s.setPosition(lerp(p.player6s.getPosition().x,p.player6p.x,time),lerp(p.player6s.getPosition().y,720-p.player6p.y,time));
 }
