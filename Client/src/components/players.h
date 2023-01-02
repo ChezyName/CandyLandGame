@@ -313,7 +313,6 @@ float clamp(float x, float min, float max){
 float lerp(float a, float b, float t)
 {
     t = clamp(t,0,1);
-    cout << "Returning @ T: " << t << " & " <<  (t * (b-a) + a) << endl;
     return t * (b-a) + a;
 }
 

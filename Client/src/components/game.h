@@ -5,6 +5,7 @@
 #include "players.h"
 #include "spot.h"
 #include "button.h"
+#include "SidePanel.h"
 
 using namespace std;
 using namespace sf;
@@ -33,7 +34,6 @@ Font currentFont;
 string myName;
 bool startGame = false;
 RectangleShape PlayerList(Vector2f(400,80*6));
-RectangleShape Interact(Vector2f(600,720));
 
 RectangleShape gameBG;
 Texture gameBGT;
@@ -136,9 +136,6 @@ void CreatePlayerSprites(RenderWindow* w){
 
     PlayerList.setSize(Vector2f(250,ys*GetPlayerCount(allPlayers)));
 
-    Interact.setPosition(1280-(Interact.getLocalBounds().width/2),0);
-    Interact.setFillColor(Color(80,80,80,255));
-
     createPlayerTextObjs(allPlayers);
 
     allPlayers.player1c.setPosition(xs,ys*0.5);
@@ -166,6 +163,8 @@ void CreatePlayerSprites(RenderWindow* w){
     gameBGT.loadFromFile("Assets/BG.png");
     gameBG.setTexture(&gameBGT);
     gameBG.setSize(Vector2f(x*2,y*2));
+
+    createSidePanel();
 
     //Create buttons
     RollDice = new Button("Roll Dice",1280-250,25,200,50,currentFont);
@@ -215,6 +214,9 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
     DisplayPlayers(allPlayers,window);
 
     //UI
+    UpdatePanel(window,Lclock);
+    UpdateButton(RollDice,window,MousePosition);
+
     window->draw(PlayerList);
     DisplayPlayerIcons(allPlayers,window);
     DisplayPlayersText(allPlayers,window);
@@ -249,9 +251,11 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
                 myTurn = true;
                 RollDice->setText("Roll Dice");
                 hasDone = false;
+                setShowPanel(true,Lclock);
             }
             else {
                 myTurn = false;
+                setShowPanel(false,Lclock);
             }
         }
         else if(dataName == "PLoc"){
@@ -262,13 +266,6 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
             getPlayerPositions(data,allPlayers);
         }
     }
-
-    //if its my turn
-    if(myTurn){
-        //our play
-        window->draw(Interact);
-        RollDice->UpdateButton(window,MousePosition);
-    }
 }
 
 void onMouseClicked(int x, int y){
@@ -278,9 +275,7 @@ void onMouseClicked(int x, int y){
             //Roll The Dice
             int r = rand() % 4 + 1;
             cout << "Rolled : " << r << endl;
-            string RolledTxt = std::to_string(r);
-            RollDice->setText(RolledTxt);
-
+            
             Packet p;
             p << "DICE";
             p << r;

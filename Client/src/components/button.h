@@ -35,6 +35,15 @@ public:
         ButtonText.setPosition(ButtonShape.getPosition().x + (ButtonShape.getLocalBounds().width/2),ButtonShape.getPosition().y + (ButtonShape.getLocalBounds().height/2));
     }
 
+    void setPosition(int x,int y){
+        ButtonShape.setPosition(Vector2f(x,y));
+        ButtonText.setPosition(ButtonShape.getPosition().x + (ButtonShape.getLocalBounds().width/2),ButtonShape.getPosition().y + (ButtonShape.getLocalBounds().height/2));
+    }
+
+    RectangleShape getShape(){
+        return ButtonShape;
+    }
+
     void setText(string T){
         ButtonText.setString(T);
     }
