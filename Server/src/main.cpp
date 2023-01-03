@@ -75,6 +75,12 @@ void playerTouchSpace(BasicSpot* s,Player* p) {
         p->setPosition(s->xPos,s->yPos);
         playerTouchSpace(s,p);
     }
+    else if(s->Name == "CARDGAIN"){
+        Packet packet;
+        packet << "CARD";
+        packet << getRandomCard();
+        p->sendPacket(packet);
+    }
 }
 
 void getPlayerData(Player* p){

@@ -67,7 +67,6 @@ bool isHoveringSprite(Sprite s,Vector2i Mouse){
 }
 
 void glowOnHover(bool Hover,Sprite& s){
-    cout << "Can Hover Sprite Cuz " << Hover << endl;
     if(Hover){
         s.setColor(Color(120,120,120,255));
     }

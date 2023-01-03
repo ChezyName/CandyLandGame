@@ -63,7 +63,7 @@ void ConnectToServer(String IP,String Name,RenderWindow* Window,Font F){
 bool hasGameStarted(){
     return startGame;
 }
-bool hoverPlayerMode;
+
 void CreatePlayerSprites(RenderWindow* w){
     int x = w->getSize().x/2;
     int y = w->getSize().y/2;
@@ -171,6 +171,7 @@ void CreatePlayerSprites(RenderWindow* w){
     gameBG.setSize(Vector2f(x*2,y*2));
 
     createSidePanel();
+    cardsStart();
 
     //Create buttons
     RollDice = new Button("Roll Dice",1280-250,25,200,50,currentFont);
@@ -214,6 +215,8 @@ void DisplaySpots(RenderWindow* window){
 
 bool myTurn = false;
 bool hasDone = false;
+bool hoverPlayerMode = false;
+string C = "";
 void GameUpdateFrame(RenderWindow* window,Clock Lclock){
     //BG
     window->draw(gameBG);
@@ -221,7 +224,7 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
     //Spot Sprites
     lerpPlayerPositions(allPlayers,Lclock);
     DisplaySpots(window);
-    glowSpritesOnHover(allPlayers,true,MousePosition);
+    glowSpritesOnHover(allPlayers,hoverPlayerMode,MousePosition);
     DisplayPlayers(allPlayers,window);
 
     //UI
@@ -282,6 +285,7 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
         else if(dataName == "CARD"){
             string c;
             data >> c;
+            cout << c << endl;
             createNewCard(c);
         }
     }
@@ -313,6 +317,17 @@ void onMouseClicked(int x, int y){
             Card* c = getCurrentCard();
             if(c->getName() == "SWAP"){
                 //Pick player to swap
+                hoverPlayerMode = true;
+                //remove card
+                cards.erase(cards.begin()+currentCard);
+            }
+        }
+        else if(!C.empty() && hoverPlayerMode == true){
+            //choose player to swap
+            if(C == "SWAP"){
+                Packet p;
+                p << "SWAP";
+
             }
         }
     }

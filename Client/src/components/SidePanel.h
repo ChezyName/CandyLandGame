@@ -32,7 +32,6 @@ void UpdatePanel(RenderWindow* win,Clock clock){
     float time = seconds/2.5;
 
     int x = lerp2(Interact.getPosition().x,setX,time);
-    cout << "Interact Pannel X is " << x << endl;
     Interact.setPosition(x,0);
 
     win->draw(Interact);
