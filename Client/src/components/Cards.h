@@ -67,3 +67,7 @@ void createNewCard(string name){
     Card* c = new Card(name);
     cards.push_back(c);
 }
+
+Card* getCurrentCard(){
+    return cards[currentCard];
+}

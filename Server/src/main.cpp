@@ -100,6 +100,7 @@ void getPlayerData(Player* p){
                 setNextPlayer();
             }
             else if(dn == "SKIP"){
+                cout << p->getUsername() << " Skipped Thier Turn." << endl;
                 setNextPlayer();
             }
         }
@@ -125,6 +126,34 @@ void createSpotsForAll(){
     //set player positions to first spot
     setAllPlayersPos(spots.front()->xPos,spots.front()->yPos);
     gameStarted = true;
+    
+    //Give Card To All
+    Packet packet;
+    packet << "CARD";
+    if(players.player1 != nullptr){
+        packet << getRandomCard();
+        players.player1->sendPacket(packet);
+    }
+    if(players.player2 != nullptr){
+        packet << getRandomCard();
+        players.player2->sendPacket(packet);
+    }
+    if(players.player3 != nullptr){
+        packet << getRandomCard();
+        players.player3->sendPacket(packet);
+    }
+    if(players.player4 != nullptr){
+        packet << getRandomCard();
+        players.player4->sendPacket(packet);
+    }
+    if(players.player5 != nullptr){
+        packet << getRandomCard();
+        players.player5->sendPacket(packet);
+    }
+    if(players.player6 != nullptr){
+        packet << getRandomCard();
+        players.player6->sendPacket(packet);
+    }
 }
 
 void setAllPlayersPos(int x, int y){

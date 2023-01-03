@@ -57,6 +57,37 @@ struct Players
     Vector2f player6p;
 };
 
+bool isHoveringSprite(Sprite s,Vector2i Mouse){
+    int maxX = ((s.getGlobalBounds().width/2) + s.getPosition().x);
+    int minX = (s.getPosition().x-(s.getGlobalBounds().width/2));
+    int maxY = ((s.getGlobalBounds().height/2) + s.getPosition().y);
+    int minY = (s.getPosition().y-(s.getGlobalBounds().height/2));
+
+    return (maxX >= Mouse.x && minX <= Mouse.x && maxY >= Mouse.y && minY <= Mouse.y);
+}
+
+void glowOnHover(bool Hover,Sprite& s){
+    cout << "Can Hover Sprite Cuz " << Hover << endl;
+    if(Hover){
+        s.setColor(Color(120,120,120,255));
+    }
+    else{
+        s.setColor(Color::White);
+    }
+}
+
+void glowSpritesOnHover(Players& p,bool canGlow,Vector2i Mouse){
+    glowOnHover(canGlow && isHoveringSprite(p.player1s,Mouse),p.player1s);
+
+    /*
+    glowOnHover(canGlow && isHoveringSprite(p.player2s,Mouse),p.player2s);
+    glowOnHover(canGlow && isHoveringSprite(p.player3s,Mouse),p.player3s);
+    glowOnHover(canGlow && isHoveringSprite(p.player4s,Mouse),p.player4s);
+    glowOnHover(canGlow && isHoveringSprite(p.player5s,Mouse),p.player5s);
+    glowOnHover(canGlow && isHoveringSprite(p.player6s,Mouse),p.player6s);
+    */
+}
+
 void createPlayerTextObjs(Players& p){
     cf.loadFromFile("Arial.ttf");
     int textSize = 28;

@@ -43,6 +43,7 @@ Vector2i MousePosition;
 
 Button* RollDice;
 Button* SkipTurn;
+Button* UseCard;
 
 Button* NextCard;
 Button* LastCard;
@@ -62,7 +63,7 @@ void ConnectToServer(String IP,String Name,RenderWindow* Window,Font F){
 bool hasGameStarted(){
     return startGame;
 }
-
+bool hoverPlayerMode;
 void CreatePlayerSprites(RenderWindow* w){
     int x = w->getSize().x/2;
     int y = w->getSize().y/2;
@@ -176,6 +177,7 @@ void CreatePlayerSprites(RenderWindow* w){
     SkipTurn = new Button("Skip Turn",1280-250,650,200,50,currentFont);
     NextCard = new Button(">",1280-250,25,50,50,currentFont);
     LastCard = new Button("<",1280-250,25,50,50,currentFont);
+    UseCard = new Button("Use Card",1280-250,525,200,50,currentFont);
 }
 
 void waitForConnections(RenderWindow* win){
@@ -219,12 +221,14 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
     //Spot Sprites
     lerpPlayerPositions(allPlayers,Lclock);
     DisplaySpots(window);
+    glowSpritesOnHover(allPlayers,true,MousePosition);
     DisplayPlayers(allPlayers,window);
 
     //UI
     UpdatePanel(window,Lclock);
     UpdateButton(RollDice,window,MousePosition);
     UpdateButton(SkipTurn,window,MousePosition);
+    UpdateButton(UseCard,window,MousePosition);
     UpdateCards(window,getPanel(),NextCard,LastCard,MousePosition);
 
     window->draw(PlayerList);
@@ -275,6 +279,11 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
         else if(dataName == "FPLoc"){
             getPlayerPositions(data,allPlayers);
         }
+        else if(dataName == "CARD"){
+            string c;
+            data >> c;
+            createNewCard(c);
+        }
     }
 }
 
@@ -299,6 +308,12 @@ void onMouseClicked(int x, int y){
             p << "SKIP";
             playerSocket->getSocket()->send(p);
             hasDone = true;
+        }
+        else if(UseCard->buttonClicked(MousePosition)){
+            Card* c = getCurrentCard();
+            if(c->getName() == "SWAP"){
+                //Pick player to swap
+            }
         }
     }
 }
