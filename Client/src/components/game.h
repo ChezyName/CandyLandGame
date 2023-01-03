@@ -331,13 +331,20 @@ void onMouseClicked(int x, int y,Clock clk){
         }
         else if(UseCard->buttonClicked(MousePosition)){
             Card* c = getCurrentCard();
+            if(c == nullptr) return;
             if(c->getName() == "SWAP"){
                 //Pick player to swap
                 hoverPlayerMode = true;
                 //remove card
-                cards.erase(cards.begin()+currentCard);
+                RemoveCard();
                 C = "SWAP";
                 setShowPanel(false,clk);
+            }
+            else if(c->getName() == "JUMP"){
+                Packet p;
+                p << "JUMP";
+                playerSocket->getSocket()->send(p);
+                RemoveCard();
             }
         }
     }

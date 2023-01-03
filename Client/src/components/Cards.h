@@ -38,6 +38,16 @@ void UpdateCards(RenderWindow* W,RectangleShape RS,Button* next,Button* last,Vec
     last->UpdateButton(W,Mouse);
 }
 
+void DisplayCard(){
+    if(cards.size() > 0 && currentCard < cards.size()){
+        cardTexture.loadFromFile("Assets/Cards/" + cards[currentCard]->getName() + ".png");
+    }
+    else{
+        cardTexture.loadFromFile("Assets/Cards/NA.png");
+    }
+    CardSprite.setTexture(cardTexture);
+}
+
 void onButtonClicked(int x,int y,Button* next,Button* last){
     Vector2i mouse;
     mouse.x = x;
@@ -46,15 +56,22 @@ void onButtonClicked(int x,int y,Button* next,Button* last){
     if(next->buttonClicked(mouse)){
         currentCard++;
         if(cards.size() >= currentCard) currentCard = (cards.size()-1);
-        cardTexture.loadFromFile("Assets/Cards/" + cards[currentCard]->getName() + ".png");
+        DisplayCard();
+        
     }
     else if(last->buttonClicked(mouse)){
         currentCard--;
         if(currentCard <= 0) currentCard = 0;
-        cardTexture.loadFromFile("Assets/Cards/" + cards[currentCard]->getName() + ".png");
+        DisplayCard();
     }
+}
 
-    CardSprite.setTexture(cardTexture);
+void RemoveCard(){
+    cards.erase(cards.begin()+currentCard);
+    currentCard++;
+    if(cards.size() < currentCard) currentCard--;
+    if(currentCard < 0) currentCard = 0;
+    DisplayCard();
 }
 
 void cardsStart(){
@@ -65,7 +82,13 @@ void cardsStart(){
 }
 
 void createNewCard(string name){
-    Card* c = new Card("SWAP");
+    bool exists = false;
+    for(auto card : cards){
+        if(card->getName() == name) exists = true; break;
+    }
+    if(exists) return;
+
+    Card* c = new Card(name);
     cards.push_back(c);
     currentCard = cards.size() - 1;
 
@@ -74,5 +97,6 @@ void createNewCard(string name){
 }
 
 Card* getCurrentCard(){
-    return cards[currentCard];
+    if(cards.size() > 0 && currentCard < cards.size()) return cards[currentCard];
+    else return nullptr;
 }

@@ -109,6 +109,16 @@ void getPlayerData(Player* p){
                 cout << p->getUsername() << " Skipped Thier Turn." << endl;
                 setNextPlayer();
             }
+            else if(dn == "JUMP"){
+                cout << p->getUsername() << " Has Used 'Jump' Card, Moving +2 Spaces." << endl;
+                
+                p->spotIndex += 2;
+                p->spotIndex = clamp(p->spotIndex,0,spots.size());
+                BasicSpot* s = spots[p->spotIndex];
+                p->setPosition(s->xPos,s->yPos);
+                playerTouchSpace(s,p);
+                setNextPlayer();
+            }
             else if(dn == "SWAP"){
                 int p1;
                 int p2;
@@ -132,10 +142,19 @@ void getPlayerData(Player* p){
                 if(p2 == 6) pb = players.player6;
 
                 Vector2i tempPos = pa->getPosition();
+                int bfspot = pa->spotIndex;
                 pa->setPosition(pb->getPosition().x,pb->getPosition().y);
+                pa->spotIndex = pb->spotIndex;
+                pb->spotIndex = bfspot;
                 pb->setPosition(tempPos.x,tempPos.y);
 
                 cout << pa->getUsername() << " and " << pb->getUsername() << " are switching positions." << endl;
+
+                BasicSpot* s = spots[pa->spotIndex];
+                playerTouchSpace(s,pa);
+
+                BasicSpot* s2 = spots[pb->spotIndex];
+                playerTouchSpace(s2,pb);
 
                 setNextPlayer();
             }
