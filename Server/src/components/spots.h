@@ -5,13 +5,13 @@ using namespace std;
 
 struct BasicSpot
 {
+public:
     BasicSpot(int x, int y,string n) : xPos(x), yPos(y), Name(n) {}
     virtual ~BasicSpot() = default;
 
     virtual void onPlayerStandOn(class Player* p) = 0; // pure virtual (must be defined by deriving classes)
     
     string Name = "BASIC";
-
     int xPos;
     int yPos;
 };
@@ -20,9 +20,7 @@ struct StartingSpot : public BasicSpot
 {
     StartingSpot(int x,int y) : BasicSpot(x,y,"START") {}
 
-    virtual void onPlayerStandOn(class Player* p) override {
-        cout << "STARTING SPOT" << endl;
-    }
+    virtual void onPlayerStandOn(class Player* p) override {}
 };
 
 
@@ -30,19 +28,16 @@ struct FinalSpot : public BasicSpot
 {
     FinalSpot(int x,int y) : BasicSpot(x,y,"END") {}
 
-    virtual void onPlayerStandOn(class Player* p) override {
-        cout << "BASIC SPOT" << endl;
-    }
+    virtual void onPlayerStandOn(class Player* p) override {}
 };
 
 struct EmptySpot : public BasicSpot
 {
     EmptySpot(int x,int y) : BasicSpot(x,y,"EMPTY") {}
 
-    virtual void onPlayerStandOn(class Player* p) override {
-        cout << "BASIC SPOT" << endl;
-    }
+    virtual void onPlayerStandOn(class Player* p) override {}
 };
+
 
 bool getRandomBool(){
     int randomval = rand() % 2;
@@ -50,7 +45,8 @@ bool getRandomBool(){
 };
 
 BasicSpot* CreateRandomSpot(int x,int y){
-    return (new EmptySpot(x,y));
+    int random = rand() % 2 + 1;
+    return new EmptySpot(x,y);
 }
 
 vector<BasicSpot*> createSpots(){

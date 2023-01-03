@@ -6,6 +6,7 @@
 #include "spot.h"
 #include "button.h"
 #include "SidePanel.h"
+#include "Cards.h"
 
 using namespace std;
 using namespace sf;
@@ -42,6 +43,9 @@ Vector2i MousePosition;
 
 Button* RollDice;
 Button* SkipTurn;
+
+Button* NextCard;
+Button* LastCard;
 
 void setMousePosition(int x, int y){
     MousePosition.x = x;
@@ -170,6 +174,8 @@ void CreatePlayerSprites(RenderWindow* w){
     //Create buttons
     RollDice = new Button("Roll Dice",1280-250,25,200,50,currentFont);
     SkipTurn = new Button("Skip Turn",1280-250,650,200,50,currentFont);
+    NextCard = new Button(">",1280-250,25,50,50,currentFont);
+    LastCard = new Button("<",1280-250,25,50,50,currentFont);
 }
 
 void waitForConnections(RenderWindow* win){
@@ -219,6 +225,7 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
     UpdatePanel(window,Lclock);
     UpdateButton(RollDice,window,MousePosition);
     UpdateButton(SkipTurn,window,MousePosition);
+    UpdateCards(window,getPanel(),NextCard,LastCard,MousePosition);
 
     window->draw(PlayerList);
     DisplayPlayerIcons(allPlayers,window);
@@ -272,6 +279,8 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
 }
 
 void onMouseClicked(int x, int y){
+    onButtonClicked(x,y,NextCard,LastCard);
+
     if(myTurn && !hasDone){
         setMousePosition(x,y);
         if(RollDice->buttonClicked(MousePosition)){

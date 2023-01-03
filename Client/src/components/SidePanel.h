@@ -38,6 +38,10 @@ void UpdatePanel(RenderWindow* win,Clock clock){
     win->draw(Interact);
 }
 
+RectangleShape getPanel(){
+    return Interact;
+}
+
 void UpdateButton(class Button* b,RenderWindow* win,Vector2i cursor){
     int finalX = ((Interact.getPosition().x + (Interact.getPosition().x + (Interact.getLocalBounds().width/2)))/2)-(b->getShape().getLocalBounds().width/2);
     b->setPosition(finalX,b->getShape().getPosition().y);

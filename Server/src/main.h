@@ -22,3 +22,4 @@ void UpdatePlayerPositions();
 void setAllPlayersPos(int x, int y);
 void getPlayerData(Player* p);
 int setNextPlayingPlayer();
+void playerTouchSpace(BasicSpot* s,Player* p);

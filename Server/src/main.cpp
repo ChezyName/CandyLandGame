@@ -59,6 +59,24 @@ void setNextPlayer(){
     sendCPlayer();
 }
 
+void setNewPosition(Player* p){
+    Packet packet;
+    packet << "L2N";
+    packet << p->getUsername().c_str() << p->x << p->y;
+    sendPacketToAll(players,packet);
+}
+
+void playerTouchSpace(BasicSpot* s,Player* p) {
+    if(s->Name == "+2"){
+        p->spotIndex += 2;
+        p->spotIndex = clamp(p->spotIndex,0,spots.size());
+        BasicSpot* s = spots[p->spotIndex];
+
+        p->setPosition(s->xPos,s->yPos);
+        playerTouchSpace(s,p);
+    }
+}
+
 void getPlayerData(Player* p){
     Packet data;
     if(p != nullptr){
@@ -78,6 +96,7 @@ void getPlayerData(Player* p){
                 BasicSpot* s = spots[p->spotIndex];
                 cout << "Old Position Was: " << p->x << "," << p->y << ". New Position is: " << s->xPos << "," << s->yPos << "." << endl; 
                 p->setPosition(s->xPos,s->yPos);
+                playerTouchSpace(s,p);
                 setNextPlayer();
             }
             else if(dn == "SKIP"){
