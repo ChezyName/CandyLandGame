@@ -46,24 +46,22 @@ void onButtonClicked(int x,int y,Button* next,Button* last){
     if(next->buttonClicked(mouse)){
         currentCard++;
         if(cards.size() >= currentCard) currentCard = (cards.size()-1);
+        cardTexture.loadFromFile("Assets/Cards/" + cards[currentCard]->getName() + ".png");
     }
     else if(last->buttonClicked(mouse)){
         currentCard--;
         if(currentCard <= 0) currentCard = 0;
-    }
-
-    if(currentCard > 0 && currentCard < cards.size()){
         cardTexture.loadFromFile("Assets/Cards/" + cards[currentCard]->getName() + ".png");
     }
-    else{
-        cardTexture.loadFromFile("Assets/Cards/NA.png");
-    }
+
     CardSprite.setTexture(cardTexture);
 }
 
 void cardsStart(){
-    cardTexture.loadFromFile("Assets/Cards/NA.png");
-    CardSprite.setTexture(cardTexture);
+    if(cards.size() == 0){
+        cardTexture.loadFromFile("Assets/Cards/NA.png");
+        CardSprite.setTexture(cardTexture);
+    }
 }
 
 void createNewCard(string name){

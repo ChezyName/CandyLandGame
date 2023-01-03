@@ -53,7 +53,7 @@ int main()
                 setMousePosition(Mouse::getPosition(window).x,Mouse::getPosition(window).y);
             }
             if(event.type == Event::MouseButtonPressed && GS == Gameplay){
-                onMouseClicked(Mouse::getPosition(window).x,Mouse::getPosition(window).y);
+                onMouseClicked(Mouse::getPosition(window).x,Mouse::getPosition(window).y,pLerpClock);
             }
         }
 

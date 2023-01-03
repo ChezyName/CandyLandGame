@@ -291,10 +291,26 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
     }
 }
 
-void onMouseClicked(int x, int y){
+void onMouseClicked(int x, int y,Clock clk){
     onButtonClicked(x,y,NextCard,LastCard);
 
-    if(myTurn && !hasDone){
+    if(!C.empty() && hoverPlayerMode == true){
+        //choose player to swap
+        if(C == "SWAP"){
+            Packet p;
+            p << "SWAP";
+
+            int HP = getPlayerClicked(allPlayers,MousePosition);
+            int ME = getMyNumber(allPlayers);
+            cout << "Sending " << HP << " and " << ME << " TO SERVER!" << endl;
+            if(HP != -1 && ME != -1){
+                p << HP << ME;
+                playerSocket->getSocket()->send(p);
+                hoverPlayerMode = false;
+            }
+        }
+    }
+    else if(myTurn && !hasDone && !hoverPlayerMode){
         setMousePosition(x,y);
         if(RollDice->buttonClicked(MousePosition)){
             //Roll The Dice
@@ -320,14 +336,8 @@ void onMouseClicked(int x, int y){
                 hoverPlayerMode = true;
                 //remove card
                 cards.erase(cards.begin()+currentCard);
-            }
-        }
-        else if(!C.empty() && hoverPlayerMode == true){
-            //choose player to swap
-            if(C == "SWAP"){
-                Packet p;
-                p << "SWAP";
-
+                C = "SWAP";
+                setShowPanel(false,clk);
             }
         }
     }

@@ -51,7 +51,7 @@ bool getRandomBool(){
 };
 
 BasicSpot* CreateRandomSpot(int x,int y){
-    int random = rand() % 2 + 1;
+    int random = rand() % 4 + 1;
     if(random == 1) return new CardGain(x,y);
     return new EmptySpot(x,y);
 }

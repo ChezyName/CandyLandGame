@@ -75,16 +75,33 @@ void glowOnHover(bool Hover,Sprite& s){
     }
 }
 
+int getPlayerClicked(Players& p,Vector2i Mouse){
+    if(isHoveringSprite(p.player1s,Mouse)) return 1;
+    if(isHoveringSprite(p.player2s,Mouse)) return 2;
+    if(isHoveringSprite(p.player3s,Mouse)) return 3;
+    if(isHoveringSprite(p.player4s,Mouse)) return 4;
+    if(isHoveringSprite(p.player5s,Mouse)) return 5;
+    if(isHoveringSprite(p.player6s,Mouse)) return 6;
+    return -1;
+}
+
+int getMyNumber(Players& p){
+    if(p.ME == p.player1) return 1;
+    if(p.ME == p.player2) return 2;
+    if(p.ME == p.player3) return 3;
+    if(p.ME == p.player4) return 4;
+    if(p.ME == p.player5) return 5;
+    if(p.ME == p.player6) return 6;
+    return -1;
+}
+
 void glowSpritesOnHover(Players& p,bool canGlow,Vector2i Mouse){
     glowOnHover(canGlow && isHoveringSprite(p.player1s,Mouse),p.player1s);
-
-    /*
     glowOnHover(canGlow && isHoveringSprite(p.player2s,Mouse),p.player2s);
     glowOnHover(canGlow && isHoveringSprite(p.player3s,Mouse),p.player3s);
     glowOnHover(canGlow && isHoveringSprite(p.player4s,Mouse),p.player4s);
     glowOnHover(canGlow && isHoveringSprite(p.player5s,Mouse),p.player5s);
     glowOnHover(canGlow && isHoveringSprite(p.player6s,Mouse),p.player6s);
-    */
 }
 
 void createPlayerTextObjs(Players& p){

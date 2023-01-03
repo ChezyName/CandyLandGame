@@ -32,6 +32,10 @@ class Player {
             x = nx;
             y = ny;
         }
+
+        Vector2i getPosition(){
+            return Vector2i(x,y);
+        }
 };
 
 struct Players

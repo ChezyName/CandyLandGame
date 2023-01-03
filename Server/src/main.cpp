@@ -109,6 +109,36 @@ void getPlayerData(Player* p){
                 cout << p->getUsername() << " Skipped Thier Turn." << endl;
                 setNextPlayer();
             }
+            else if(dn == "SWAP"){
+                int p1;
+                int p2;
+                data >> p1 >> p2;
+
+                Player* pa;
+                Player* pb;
+
+                if(p1 == 1) pa = players.player1;
+                if(p1 == 2) pa = players.player2;
+                if(p1 == 3) pa = players.player3;
+                if(p1 == 4) pa = players.player4;
+                if(p1 == 5) pa = players.player5;
+                if(p1 == 6) pa = players.player6;
+
+                if(p2 == 1) pb = players.player1;
+                if(p2 == 2) pb = players.player2;
+                if(p2 == 3) pb = players.player3;
+                if(p2 == 4) pb = players.player4;
+                if(p2 == 5) pb = players.player5;
+                if(p2 == 6) pb = players.player6;
+
+                Vector2i tempPos = pa->getPosition();
+                pa->setPosition(pb->getPosition().x,pb->getPosition().y);
+                pb->setPosition(tempPos.x,tempPos.y);
+
+                cout << pa->getUsername() << " and " << pb->getUsername() << " are switching positions." << endl;
+
+                setNextPlayer();
+            }
         }
     }
 }
@@ -134,6 +164,7 @@ void createSpotsForAll(){
     gameStarted = true;
     
     //Give Card To All
+    /*
     Packet packet;
     packet << "CARD";
     if(players.player1 != nullptr){
@@ -160,6 +191,7 @@ void createSpotsForAll(){
         packet << getRandomCard();
         players.player6->sendPacket(packet);
     }
+    */
 }
 
 void setAllPlayersPos(int x, int y){
