@@ -1,7 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <thread>
-#include <math.h>
 
 #include "components/menu.h"
 
