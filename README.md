@@ -22,6 +22,7 @@ If you want to learn [how to play](#client) or learn how to [host a server](#ser
 
 # Cards
 *Cards impact gameplay and can only be used once per round.*
+
 ![NA Card](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/Builds/Assets/Cards/NA.png)
 **N/A Card:** *this shows when the player has no cards.*
 
