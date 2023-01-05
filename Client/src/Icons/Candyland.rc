@@ -1,0 +1,3 @@
+#include "resource.h"
+ 
+IDI_CANDYLAND ICON "CandylandIcon.ico"
