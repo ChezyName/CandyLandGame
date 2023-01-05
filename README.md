@@ -6,16 +6,16 @@ If you want to learn [how to play](#client) or learn how to [host a server](#ser
 
 
 # Spaces / Spots
-![Starting Spot](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/Builds/Assets/Spots/START.png)
+![Starting Spot](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Spots/START.png)
 **Starting Spot:** *where everyone starts*
 
-![Empty Space](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/Builds/Assets/Spots/EMPTY.png)
+![Empty Space](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Spots/EMPTY.png)
 **Empty Spot:** *this does nothing...*
 
-![Finish Spot](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/Builds/Assets/Spots/END.png)
+![Finish Spot](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Spots/END.png)
 **End Spot:** *who ever touches this spot first, wins the game!*
 
-![enter image description here](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/Builds/Assets/Spots/CARDGAIN.png)
+![enter image description here](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Spots/CARDGAIN.png)
 **Card Gain Spot:** *player gains a random card*
 
 
@@ -23,13 +23,13 @@ If you want to learn [how to play](#client) or learn how to [host a server](#ser
 # Cards
 *Cards impact gameplay and can only be used once per round.*
 
-![NA Card](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/Builds/Assets/Cards/NA.png)
+![NA Card](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/NA.png)
 **N/A Card:** *this shows when the player has no cards.*
 
-![Jump](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/Builds/Assets/Cards/JUMP.png)
+![Jump](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/JUMP.png)
 **Jump Card:** *player forces themselve to jump two spaces.*
 
-![Swap](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/Builds/Assets/Cards/SWAP.png)
+![Swap](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/SWAP.png)
 **Swap Card:** *player goes into 'swap' mode and once clicked on a an opposing player will switch places with them.*
 
 
