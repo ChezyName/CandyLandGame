@@ -19,6 +19,8 @@ public:
 
 Texture cardTexture;
 Sprite CardSprite;
+Text CardIndex;
+Font CardFont;
 
 vector<Card*> cards;
 int currentCard = 0;
@@ -34,6 +36,9 @@ void UpdateCards(RenderWindow* W,RectangleShape RS,Button* next,Button* last,Vec
     last->setPosition(finalX - (last->getShape().getLocalBounds().width*2.5),720/2);
 
     W->draw(CardSprite);
+    CardIndex.setPosition(CardSprite.getPosition().x,CardSprite.getPosition().y+145);
+    W->draw(CardIndex);
+
     next->UpdateButton(W,Mouse);
     last->UpdateButton(W,Mouse);
 }
@@ -55,7 +60,7 @@ void onButtonClicked(int x,int y,Button* next,Button* last){
 
     if(next->buttonClicked(mouse)){
         currentCard++;
-        if(cards.size() >= currentCard) currentCard = (cards.size()-1);
+        if(cards.size() <= currentCard) currentCard = (cards.size()-1);
         DisplayCard();
         
     }
@@ -63,6 +68,13 @@ void onButtonClicked(int x,int y,Button* next,Button* last){
         currentCard--;
         if(currentCard <= 0) currentCard = 0;
         DisplayCard();
+    }
+
+    if(cards.size() > 0){
+        CardIndex.setString("Card:" + std::to_string(currentCard+1));
+    }
+    else{
+        CardIndex.setString("0 Cards");
     }
 }
 
@@ -72,12 +84,35 @@ void RemoveCard(){
     if(cards.size() < currentCard) currentCard--;
     if(currentCard < 0) currentCard = 0;
     DisplayCard();
+
+    if(cards.size() > 0){
+        CardIndex.setString("Card:" + std::to_string(currentCard+1));
+    }
+    else{
+        CardIndex.setString("0 Cards");
+    }
 }
 
 void cardsStart(){
     if(cards.size() == 0){
         cardTexture.loadFromFile("Assets/Cards/NA.png");
         CardSprite.setTexture(cardTexture);
+    }
+
+    CardFont.loadFromFile("Arial.ttf");
+
+    CardIndex.setFont(CardFont);
+    CardIndex.setCharacterSize(24);
+    CardIndex.setString("Card:" + std::to_string(currentCard+1));
+    CardIndex.setFillColor(Color::White);
+    CardIndex.setStyle(Text::Bold);
+    CardIndex.setOrigin(CardIndex.getLocalBounds().width/2,CardIndex.getLocalBounds().height/2);
+
+    if(cards.size() > 0){
+        CardIndex.setString("Card:" + std::to_string(currentCard+1));
+    }
+    else{
+        CardIndex.setString("0 Cards");
     }
 }
 
@@ -94,6 +129,13 @@ void createNewCard(string name){
 
     cardTexture.loadFromFile("Assets/Cards/" + c->getName() + ".png");
     CardSprite.setTexture(cardTexture);
+
+    if(cards.size() > 0){
+        CardIndex.setString("Card:" + std::to_string(currentCard+1));
+    }
+    else{
+        CardIndex.setString("0 Cards");
+    }
 }
 
 Card* getCurrentCard(){

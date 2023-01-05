@@ -119,6 +119,11 @@ void getPlayerData(Player* p){
                 playerTouchSpace(s,p);
                 setNextPlayer();
             }
+            else if(dn == "SKIPO"){
+                setNextPlayer();
+                cout << p->getUsername() << " Skipped Next Player's Turn." << endl;
+                setNextPlayer();
+            }
             else if(dn == "SWAP"){
                 int p1;
                 int p2;

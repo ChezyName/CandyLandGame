@@ -346,6 +346,12 @@ void onMouseClicked(int x, int y,Clock clk){
                 playerSocket->getSocket()->send(p);
                 RemoveCard();
             }
+            else if(c->getName() == "SKIP"){
+                Packet p;
+                p << "SKIPO";
+                playerSocket->getSocket()->send(p);
+                RemoveCard();
+            }
         }
     }
 }

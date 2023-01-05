@@ -24,7 +24,8 @@ void getPlayerData(Player* p);
 int setNextPlayingPlayer();
 void playerTouchSpace(BasicSpot* s,Player* p);
 string getRandomCard(){
-    int random = rand() % 2;
+    int random = rand() % 3;
     if(random == 1) return "JUMP";
+    if(random == 2) return "SKIP";
     else return "SWAP";
 }
