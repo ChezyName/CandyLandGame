@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <thread>
+#include <time.h>
 
 #include "components/menu.h"
 
@@ -34,6 +35,9 @@ int main()
     FPSText.setStyle(Text::Bold);
     FloatRect bounds = FPSText.getLocalBounds();
     FPSText.setPosition(1280 - bounds.width, 0);
+
+    //Refresh Random
+    srand ( time(NULL) );
 
     while (window.isOpen())
     {
