@@ -6,6 +6,7 @@ using namespace sf;
 int main()
 {
     std::thread commandThread(runCommands);
+    srand(time(0));
 
     if (listener.listen(7777) != Socket::Done)
     {
@@ -83,6 +84,25 @@ void playerTouchSpace(BasicSpot* s,Player* p) {
     }
 }
 
+BasicSpot* JUMP(Player* p){
+    p->spotIndex++;
+    p->spotIndex = clamp(p->spotIndex,0,spots.size());
+    BasicSpot* s = spots[p->spotIndex];
+    if(s->Name == "CARDGAIN") return s;
+    else return JUMP(p);
+}
+
+void playerStepBack(Player* p){
+    p->spotIndex -= 2;
+    p->spotIndex = clamp(p->spotIndex,0,spots.size());
+    p->setPosition(spots[p->spotIndex]->xPos,spots[p->spotIndex]->yPos);
+}
+
+void resetPlayers(Player* p){
+    p->spotIndex = 0;
+    p->setPosition(spots[p->spotIndex]->xPos,spots[p->spotIndex]->yPos);
+}
+
 void getPlayerData(Player* p){
     Packet data;
     if(p != nullptr){
@@ -112,9 +132,7 @@ void getPlayerData(Player* p){
             else if(dn == "JUMP"){
                 cout << p->getUsername() << " Has Used 'Jump' Card, Moving +2 Spaces." << endl;
                 
-                p->spotIndex += 2;
-                p->spotIndex = clamp(p->spotIndex,0,spots.size());
-                BasicSpot* s = spots[p->spotIndex];
+                BasicSpot* s = JUMP(p);
                 p->setPosition(s->xPos,s->yPos);
                 playerTouchSpace(s,p);
                 setNextPlayer();
@@ -160,6 +178,67 @@ void getPlayerData(Player* p){
 
                 BasicSpot* s2 = spots[pb->spotIndex];
                 playerTouchSpace(s2,pb);
+
+                setNextPlayer();
+            }
+            else if(dn == "STEAL"){
+                int p1;
+                int p2;
+                data >> p1 >> p2;
+
+                Player* pa;
+                Player* pb;
+
+                if(p1 == 1) pa = players.player1;
+                if(p1 == 2) pa = players.player2;
+                if(p1 == 3) pa = players.player3;
+                if(p1 == 4) pa = players.player4;
+                if(p1 == 5) pa = players.player5;
+                if(p1 == 6) pa = players.player6;
+
+                if(p2 == 1) pb = players.player1;
+                if(p2 == 2) pb = players.player2;
+                if(p2 == 3) pb = players.player3;
+                if(p2 == 4) pb = players.player4;
+                if(p2 == 5) pb = players.player5;
+                if(p2 == 6) pb = players.player6;
+
+                cout << pa->getUsername() << " is stealing " << pb->getUsername() << " card." << endl;
+
+
+                Packet packet;
+                packet << "CARD";
+                packet << getRandomCard();
+                pa->sendPacket(packet);
+
+                /*
+                Packet packetb;
+                packetb << "RCARD";
+                pb->sendPacket(packetb);
+                */
+
+                UpdatePlayerPositions();
+                sendCPlayer();
+            }
+            else if(dn == "REVERSE"){
+                cout << p->getUsername() << " Forcing All Players To 'Take A Step Back'." << endl;
+                if(players.player1 != nullptr && players.player1 != p) playerStepBack(players.player1);
+                if(players.player2 != nullptr && players.player2 != p) playerStepBack(players.player2);
+                if(players.player3 != nullptr && players.player3 != p) playerStepBack(players.player3);
+                if(players.player4 != nullptr && players.player4 != p) playerStepBack(players.player4);
+                if(players.player5 != nullptr && players.player5 != p) playerStepBack(players.player5);
+                if(players.player6 != nullptr && players.player6 != p) playerStepBack(players.player6);
+                UpdatePlayerPositions();
+                sendCPlayer();
+            }
+            else if(dn == "RESET"){
+                cout << p->getUsername() << " Has Used Universal Reset!" << endl;
+                if(players.player1 != nullptr) resetPlayers(players.player1);
+                if(players.player2 != nullptr) resetPlayers(players.player2);
+                if(players.player3 != nullptr) resetPlayers(players.player3);
+                if(players.player4 != nullptr) resetPlayers(players.player4);
+                if(players.player5 != nullptr) resetPlayers(players.player5);
+                if(players.player6 != nullptr) resetPlayers(players.player6);
 
                 setNextPlayer();
             }
@@ -347,6 +426,31 @@ void runCommands(){
         }
         else if(input == "clear"){
             system("cls");
+        }
+        else if(input == "skip"){
+            cout << "Skipping Current Player's turn." << endl;
+            setNextPlayer();
+        }
+        else if(input == "give"){
+            string plr;
+            cout << "Select Player To Give NEW Card To:" << endl;
+            cin >> plr;
+            cout << "Select Card To Give " << plr << " To." << endl;
+            string card;
+            cin >> card;
+
+            Packet packet;
+            transform(card.begin(), card.end(), card.begin(), ::toupper);
+            packet << "CARD" << card;
+
+            if(players.player1 != nullptr && players.player1->getUsername() == plr) players.player1->sendPacket(packet);
+            if(players.player2 != nullptr && players.player2->getUsername() == plr) players.player2->sendPacket(packet);
+            if(players.player3 != nullptr && players.player3->getUsername() == plr) players.player3->sendPacket(packet);
+            if(players.player4 != nullptr && players.player4->getUsername() == plr) players.player4->sendPacket(packet);
+            if(players.player5 != nullptr && players.player5->getUsername() == plr) players.player5->sendPacket(packet);
+            if(players.player6 != nullptr && players.player6->getUsername() == plr) players.player6->sendPacket(packet);
+
+            cout << "Gave " << plr << " " << card << endl;
         }
         else {
             printf("Command Not Found.\n");

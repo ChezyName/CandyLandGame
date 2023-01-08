@@ -1,3 +1,4 @@
+
 # Candyland : Battle of the Ages!
 
 # Gameplay
@@ -27,14 +28,27 @@ If you want to learn [how to play](#client) or learn how to [host a server](#ser
 **N/A Card:** *this shows when the player has no cards.*
 
 ![Jump](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/JUMP.png)
-**Jump Card:** *player forces themselve to jump two spaces.*
+**Jump Card:** *player forces themselve to the next **CARD GAIN** spot.*
 
 ![Swap](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/SWAP.png)
 **Swap Card:** *player goes into 'swap' mode and once clicked on a an opposing player will switch places with them.*
 
+![Swap](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/SKIP.png)
+**Skip Card:** *Skips the next players turn.*
+
+![Steal](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/STEAL.png)
+**Steal Card:** *select player to steal a random card from them.*
+
+![Reverse](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/REVERSE.png)
+**Reverse Card:** *forces all other players to step back a few spaces.*
+
+![Protect](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/PROTECT.png)
+**Protect Card:** *protects player from all cards.*
 
 # How To Play
 ## Client
+> For the server to join they must join the ip as `localhost`
+> 
 Once you open up the game, type your name and the ip address given, and wait for the game to start. Once its your turn on the right side there will be a panel that will allow you to either *use a card, skip your turn, or roll a dice* to determine your fate. On the top left side will be the player panel and the player with `<` after thier name is whose turn it is. 
 ## Server
 Server is open on port **7777**, so make sure to port forward on port **7777**.

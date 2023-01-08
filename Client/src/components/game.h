@@ -288,6 +288,9 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
             cout << c << endl;
             createNewCard(c);
         }
+        else if(dataName == "RCARD"){
+            RemoveCard();
+        }
     }
 }
 
@@ -309,7 +312,22 @@ void onMouseClicked(int x, int y,Clock clk){
                 hoverPlayerMode = false;
             }
         }
+
+        if(C == "STEAL"){
+            Packet p;
+            p << "STEAL";
+
+            int HP = getPlayerClicked(allPlayers,MousePosition);
+            int ME = getMyNumber(allPlayers);
+            cout << "Sending " << HP << " and " << ME << " TO SERVER!" << endl;
+            if(HP != -1 && ME != -1){
+                p << HP << ME;
+                playerSocket->getSocket()->send(p);
+                hoverPlayerMode = false;
+            }
+        }
     }
+    
     else if(myTurn && !hasDone && !hoverPlayerMode){
         setMousePosition(x,y);
         if(RollDice->buttonClicked(MousePosition)){
@@ -349,6 +367,25 @@ void onMouseClicked(int x, int y,Clock clk){
             else if(c->getName() == "SKIP"){
                 Packet p;
                 p << "SKIPO";
+                playerSocket->getSocket()->send(p);
+                RemoveCard();
+            }
+            else if(c->getName() == "STEAL"){
+                hoverPlayerMode = true;
+                //remove card
+                RemoveCard();
+                C = "STEAL";
+                setShowPanel(false,clk);
+            }
+            else if(c->getName() == "RESET"){
+                Packet p;
+                p << "RESET";
+                playerSocket->getSocket()->send(p);
+                RemoveCard();
+            }
+            else if(c->getName() == "REVERSE"){
+                Packet p;
+                p << "REVERSE";
                 playerSocket->getSocket()->send(p);
                 RemoveCard();
             }
