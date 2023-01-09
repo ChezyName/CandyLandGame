@@ -39,6 +39,7 @@ If you want to learn [how to play](#client) or learn how to [host a server](#ser
 
 ![Reverse](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/REVERSE.png)
 **Reverse Card:** *forces all other players to step back a few spaces.*
+
 ![RESET](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/RESET.png)
 **Reset Card:** *Ultimate Card, Resets All Players Back To The Start.*
 
