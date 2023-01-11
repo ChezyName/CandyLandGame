@@ -1,4 +1,3 @@
-
 # [Candyland : Battle of the Ages!](https://chezyname.itch.io/candyland-battle-of-the-ages)
 
 # Gameplay
