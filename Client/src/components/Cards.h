@@ -93,6 +93,13 @@ void RemoveCard(){
     }
 }
 
+void RemoveAllCards(){
+    cards.clear();
+    currentCard = 0;
+    CardIndex.setString("0 Cards");
+    DisplayCard();
+}
+
 void cardsStart(){
     if(cards.size() == 0){
         cardTexture.loadFromFile("Assets/Cards/NA.png");

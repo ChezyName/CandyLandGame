@@ -24,6 +24,7 @@ void setAllPlayersPos(int x, int y);
 void getPlayerData(Player* p);
 int setNextPlayingPlayer();
 void playerTouchSpace(BasicSpot* s,Player* p);
+void playerWinGame(Player* p);
 string getRandomCard(){
     int random = rand() % 100 + 1;
     if(random <= 25) return "JUMP";

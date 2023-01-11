@@ -3,6 +3,10 @@
 using namespace std;
 using namespace sf;
 
+bool playerWon = false;
+float waitTime = 0;
+int cPlayer = 1;
+
 int main()
 {
     std::thread commandThread(runCommands);
@@ -22,14 +26,37 @@ int main()
             letJoin();
         }
         else {
-            gameplayLoop();
+            if(!playerWon){
+                gameplayLoop();
+            }
+            else{
+                //Wait For Next Game
+                waitTime--;
+                int nt = int(waitTime/1000);
+
+                Packet p;
+                p << "TIME" << nt;
+                sendPacketToAll(players,p);
+
+                cout << "T:" << waitTime << endl;
+                if(waitTime <= 0)
+                {
+                    playerWon = false;
+                    cout << "Restarting Game..." << endl;
+                    Packet pk;
+                    pk << "RESTART";
+                    sendPacketToAll(players,pk);
+                    cPlayer = 1;
+                    UpdatePlayerPositions();
+                    sendCPlayer();
+                }
+            }
         }
     }
 
     return 0;
 }
 
-int cPlayer = 1;
 void gameplayLoop(){
     if(cPlayer == 1) getPlayerData(players.player1);
     else if(cPlayer == 2) getPlayerData(players.player2);
@@ -82,6 +109,9 @@ void playerTouchSpace(BasicSpot* s,Player* p) {
         packet << getRandomCard();
         p->sendPacket(packet);
     }
+    else if(s->Name == "END"){
+        playerWinGame(p);
+    }
 }
 
 BasicSpot* JUMP(Player* p){
@@ -101,6 +131,23 @@ void playerStepBack(Player* p){
 void resetPlayers(Player* p){
     p->spotIndex = 0;
     p->setPosition(spots[p->spotIndex]->xPos,spots[p->spotIndex]->yPos);
+}
+
+void playerWinGame(Player* p) {
+    cout << "Player: " << p->getUsername() << " Has Won!" << endl;
+    Packet packet;
+    packet << "WINNER" << p->getUsername();
+    sendPacketToAll(players,packet);
+    //Reset Game
+    if(players.player1 != nullptr) resetPlayers(players.player1);
+    if(players.player2 != nullptr) resetPlayers(players.player2);
+    if(players.player3 != nullptr) resetPlayers(players.player3);
+    if(players.player4 != nullptr) resetPlayers(players.player4);
+    if(players.player5 != nullptr) resetPlayers(players.player5);
+    if(players.player6 != nullptr) resetPlayers(players.player6);
+
+    playerWon = true;
+    waitTime = 7500;
 }
 
 void getPlayerData(Player* p){
@@ -451,6 +498,18 @@ void runCommands(){
             if(players.player6 != nullptr && players.player6->getUsername() == plr) players.player6->sendPacket(packet);
 
             cout << "Gave " << plr << " " << card << endl;
+        }
+        else if(input == "win"){
+            string plr;
+            cout << "Select Player To Force Win." << endl;
+            cin >> plr;
+
+            if(players.player1 != nullptr && players.player1->getUsername() == plr) playerWinGame(players.player1);
+            if(players.player2 != nullptr && players.player2->getUsername() == plr) playerWinGame(players.player2);
+            if(players.player3 != nullptr && players.player3->getUsername() == plr) playerWinGame(players.player3);
+            if(players.player4 != nullptr && players.player4->getUsername() == plr) playerWinGame(players.player4);
+            if(players.player5 != nullptr && players.player5->getUsername() == plr) playerWinGame(players.player5);
+            if(players.player6 != nullptr && players.player6->getUsername() == plr) playerWinGame(players.player6);
         }
         else {
             printf("Command Not Found.\n");

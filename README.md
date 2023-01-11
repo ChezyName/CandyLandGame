@@ -1,5 +1,4 @@
-
-# Candyland : Battle of the Ages!
+# [Candyland : Battle of the Ages!](https://chezyname.itch.io/candyland-battle-of-the-ages)
 
 # Gameplay
 On each turn, the **player** has the option to *skip thier turn*, *roll the dice* or *use the selected card*. First one to make it to the crown spot wins it all!
@@ -36,14 +35,11 @@ If you want to learn [how to play](#client) or learn how to [host a server](#ser
 ![Swap](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/SKIP.png)
 **Skip Card:** *Skips the next players turn.*
 
-![Steal](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/STEAL.png)
-**Steal Card:** *select player to steal a random card from them.*
-
 ![Reverse](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/REVERSE.png)
 **Reverse Card:** *forces all other players to step back a few spaces.*
 
-![Protect](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/PROTECT.png)
-**Protect Card:** *protects player from all cards.*
+![RESET](https://raw.githubusercontent.com/ChezyName/CandyLandGame/main/Client/CandylandClient/Assets/Cards/RESET.png)
+**Reset Card:** *Ultimate Card, Resets All Players Back To The Start.*
 
 # How To Play
 ## Client
@@ -62,6 +58,9 @@ Game auto starts after 6 players join, but can be force started by using the com
 | ----------- | ----------- |
 | `start` | starts the game and will not allow others to join.|
 | `players` | displays how many players are in the game and thier names.|
+|`give`| gives the player a card, asks for player name then card name IE: `give username swap`
+|`skip`|skips the current players turn.
+|`win`|forces a win on the player like `win username`
 
 
 # Building the game from Source

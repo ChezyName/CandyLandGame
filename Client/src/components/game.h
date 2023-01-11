@@ -63,6 +63,9 @@ void ConnectToServer(String IP,String Name,RenderWindow* Window,Font F){
 bool hasGameStarted(){
     return startGame;
 }
+Text GameEndingT;
+Font GameEndingF;
+Text Timer;
 
 void CreatePlayerSprites(RenderWindow* w){
     int x = w->getSize().x/2;
@@ -165,6 +168,21 @@ void CreatePlayerSprites(RenderWindow* w){
     allPlayers.player5s.setScale(Vector2f(0.5,0.5));
     allPlayers.player6s.setScale(Vector2f(0.5,0.5));
 
+    GameEndingF.loadFromFile("Arial.ttf");
+    GameEndingT.setFont(GameEndingF);
+    GameEndingT.setCharacterSize(72);
+    GameEndingT.setString("A WINNER IS YOU!");
+    GameEndingT.setFillColor(Color::White);
+    GameEndingT.setStyle(Text::Bold);
+    GameEndingT.setPosition(0,0);
+
+    Timer.setFont(GameEndingF);
+    Timer.setCharacterSize(72);
+    Timer.setString("  5s Remaining");
+    Timer.setFillColor(Color::White);
+    Timer.setStyle(Text::Bold);
+    Timer.setPosition(0,(720/2));
+
     //Change Background
     gameBGT.loadFromFile("Assets/BG.png");
     gameBG.setTexture(&gameBGT);
@@ -217,26 +235,34 @@ bool myTurn = false;
 bool hasDone = false;
 bool hoverPlayerMode = false;
 string C = "";
+bool GameEnded = false;
+
 void GameUpdateFrame(RenderWindow* window,Clock Lclock){
-    //BG
-    window->draw(gameBG);
+    if(!GameEnded){
+        //BG
+        window->draw(gameBG);
 
-    //Spot Sprites
-    lerpPlayerPositions(allPlayers,Lclock);
-    DisplaySpots(window);
-    glowSpritesOnHover(allPlayers,hoverPlayerMode,MousePosition);
-    DisplayPlayers(allPlayers,window);
+        //Spot Sprites
+        lerpPlayerPositions(allPlayers,Lclock);
+        DisplaySpots(window);
+        glowSpritesOnHover(allPlayers,hoverPlayerMode,MousePosition);
+        DisplayPlayers(allPlayers,window);
 
-    //UI
-    UpdatePanel(window,Lclock);
-    UpdateButton(RollDice,window,MousePosition);
-    UpdateButton(SkipTurn,window,MousePosition);
-    UpdateButton(UseCard,window,MousePosition);
-    UpdateCards(window,getPanel(),NextCard,LastCard,MousePosition);
+        //UI
+        UpdatePanel(window,Lclock);
+        UpdateButton(RollDice,window,MousePosition);
+        UpdateButton(SkipTurn,window,MousePosition);
+        UpdateButton(UseCard,window,MousePosition);
+        UpdateCards(window,getPanel(),NextCard,LastCard,MousePosition);
 
-    window->draw(PlayerList);
-    DisplayPlayerIcons(allPlayers,window);
-    DisplayPlayersText(allPlayers,window);
+        window->draw(PlayerList);
+        DisplayPlayerIcons(allPlayers,window);
+        DisplayPlayersText(allPlayers,window);
+    }
+    else {
+        window->draw(GameEndingT);
+        window->draw(Timer);
+    }
 
 
     //Get Socket Updates
@@ -258,6 +284,24 @@ void GameUpdateFrame(RenderWindow* window,Clock Lclock){
                 newS->createSprite();
                 spots.push_back(newS);
             }
+        }
+        else if(dataName == "WINNER"){
+            string name;
+            data >> name;
+            cout << name << " Has Won The Game..." << endl;
+            GameEndingT.setString(name + " Won The Game!");
+            GameEnded = true;
+            RemoveAllCards();
+        }
+        else if(dataName == "RESTART"){
+            GameEnded = false;
+            cout << "Restarted Game" << endl;
+        }
+        else if(dataName == "TIME"){
+            int T;
+            data >> T;
+            cout << T << endl;
+            Timer.setString("  " + std::to_string(T) + "s Remaining");
         }
         else if(dataName == "CPLR"){
             string name;
