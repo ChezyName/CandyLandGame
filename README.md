@@ -1,3 +1,4 @@
+
 # [Candyland : Battle of the Ages!](https://chezyname.itch.io/candyland-battle-of-the-ages)
 
 # Gameplay
@@ -58,9 +59,6 @@ Game auto starts after 6 players join, but can be force started by using the com
 | ----------- | ----------- |
 | `start` | starts the game and will not allow others to join.|
 | `players` | displays how many players are in the game and thier names.|
-|`give`| gives the player a card, asks for player name then card name IE: `give username swap`
-|`skip`|skips the current players turn.
-|`win`|forces a win on the player like `win username`
 
 
 # Building the game from Source
