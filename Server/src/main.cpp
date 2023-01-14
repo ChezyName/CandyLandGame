@@ -118,7 +118,7 @@ BasicSpot* JUMP(Player* p){
     p->spotIndex++;
     p->spotIndex = clamp(p->spotIndex,0,spots.size());
     BasicSpot* s = spots[p->spotIndex];
-    if(s->Name == "CARDGAIN") return s;
+    if(s->Name == "CARDGAIN" || p->spotIndex >= spots.size()) return s;
     else return JUMP(p);
 }
 
